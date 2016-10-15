@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Listar Eventos</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Eventos Cadastrados</h4>
+                    <p:messages id="messages" autoUpdate="true" closable="true" /> 
+                    <h:panelGrid class="tamanho995">
+                        <div>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="left">
+                                  
+                                </p:toolbarGroup>  
+
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="evento" preProcessor="#{eventoManagedBean.imprimePDF}" fileName="eventos" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="evento" fileName="eventos" preProcessor="#{eventoManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+
+                        <h:outputText value="Não existem Eventos cadastradas" rendered="#{empty eventoManagedBean.eventos}" />
+
+                        <p:dataTable id="evento" value="#{eventoManagedBean.eventos}" var="evento" rendered="#{not empty eventoManagedBean.eventos}"
+                                     filteredValue="#{eventoManagedBean.eventoFiltro}" scrollHeight="270" scrollable="true" >
+                            <p:column sortBy="#{evento.iddata}" filterBy="#{evento.iddata}">
+                                <f:facet name="header">
+                                    <h:outputText value="Data do Evento" />
+                                </f:facet>
+                                <h:outputText value="#{evento.iddata}">
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column sortBy="#{evento.cliente.nome}" filterBy="#{evento.cliente.nome}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nome Contratante"/>
+                                </f:facet>
+                                <h:outputText value="#{evento.cliente.nome}" />
+                            </p:column>      
+                            <p:column sortBy="#{evento.tipo.nometipo}" filterBy="#{evento.tipo.nometipo}">
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo do Evento"/>
+                                </f:facet>
+                                <h:outputText value="#{evento.tipo.nometipo}"  />
+                            </p:column> 
+                            <p:column sortBy="#{evento.ativo}" filterBy="#{evento.ativo}">
+                                <f:facet name="header">
+                                    <h:outputText value="Status do Evento"/>
+                                </f:facet>
+                                <h:outputText value="Aguardando Confirmação" rendered="#{evento.ativo == 'A'}" />
+                                <h:outputText value="Confirmado" rendered="#{evento.ativo == 'C'}" />
+                            </p:column>
+                            
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{eventoManagedBean.montaPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{evento}" target="#{eventoManagedBean.evento}" />  
+                                </h:commandButton>
+                                <h:outputText value=" " ></h:outputText>
+                                <h:commandButton styleClass="btn btn-danger btn-small" action="#{eventoManagedBean.Excluir}" value="Excluir">
+                                    <f:setPropertyActionListener value="#{evento}" target="#{eventoManagedBean.evento}" />  
+                                </h:commandButton>                                     
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html> 

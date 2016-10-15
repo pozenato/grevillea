@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+
+            <ui:define name="title">Listar Colaboradores</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Colaboradores Cadastrados</h4>
+                    <h:panelGrid class="tamanho995">
+                        <div>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="left">
+                                    <h:commandLink styleClass="btn btn-success btn-small" action="#{colaboradorManagedBean.montarPaginaParaInsercao}" value="Adicionar Colaboradores" />
+                                </p:toolbarGroup>  
+
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="colaborador" preProcessor="#{colaboradorManagedBean.imprimePDF}" fileName="Colaboradores" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="colaborador" fileName="Colaboradores" preProcessor="#{colaboradorManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+                        <h:outputText value="Não existem colaboradores cadastrados !!!" rendered="#{empty colaboradorManagedBean.colaboradores}" />
+
+                        <p:dataTable id="colaborador" value="#{colaboradorManagedBean.colaboradores}" var="colaborador" rendered="#{not empty colaboradorManagedBean.colaboradores}"
+                                     scrollHeight="270" scrollable="true" filteredValue="#{colaboradorManagedBean.colaboradorFiltro}">
+                            <p:column sortBy="#{colaborador.nome}" filterBy="#{colaborador.nome}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nome do Colaborador" />
+                                </f:facet>
+                                <h:outputText value="#{colaborador.nome}" />
+                            </p:column>
+                            <p:column sortBy="#{colaborador.tipo.descricao}" filterBy="#{colaborador.tipo.descricao}">
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo do Colaborador" />
+                                </f:facet>
+                                <h:outputText value="#{colaborador.tipo.descricao}" />
+                            </p:column>
+                            <p:column sortBy="#{colaborador.status}"  filterBy="#{colaborador.status}">
+                                <f:facet name="header">
+                                    <h:outputText value="Status do Colaborador" />
+                                </f:facet>
+                                <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
+                            </p:column>
+                            
+                            
+                        </p:dataTable>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html> 

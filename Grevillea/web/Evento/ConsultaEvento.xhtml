@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Consulta Evento</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h:form>
+                        <p:growl id="messages" showDetail="true" />
+
+                        <h:panelGrid columnClasses="value">
+                            <p:schedule id="scheduleLocale" value="#{eventoManagedBean.eventModel}" widgetVar="myschedule" timeZone="GMT+3" locale="tr" rightHeaderTemplate="month">
+
+                               
+                                <p:ajax event="eventSelect" listener="#{eventoManagedBean.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                <p:ajax event="eventMove" listener="#{consultaEventoManagedBean.onEventMove}" update="messages" />
+                                <p:ajax event="eventResize" listener="#{consultaEventoManagedBean.onEventResize}" update="messages" />
+
+                            </p:schedule>
+
+                        </h:panelGrid>
+
+                        <p:dialog widgetVar="eventDialog" header="Detelhes do Evento" showEffect="clip" hideEffect="clip">
+                            <h:panelGrid id="eventDetails" columns="2">
+                                <h:outputLabel for="title" value="Tipo de Evento:" />
+                                <p:inputText id="title" value="#{eventoManagedBean.event.title}" disabled="true" />
+
+                                <h:outputLabel for="from" value="Contratante:" />
+                                <p:inputText id="from" value="#{eventoManagedBean.eventoSc.cliente.nome}" disabled="true"/>
+                                                             
+
+                                <h:outputLabel for="to" value="Telefone:" />
+                                <p:inputText id="to" value="#{eventoManagedBean.eventoSc.cliente.telefone}" disabled="true"/>
+                                
+
+                                <h:outputLabel for="allDay" value="Evento Confirmado:" />
+                                <h:selectBooleanCheckbox id="allDay" value="#{eventoManagedBean.ativo}" disabled="true" />
+
+                            </h:panelGrid>
+                        </p:dialog>    
+                    </h:form>
+
+                    <script type="text/javascript">
+                        PrimeFaces.locales['tr'] = {
+                            closeText: 'kapat',
+                            prevText: 'geri',
+                            nextText: 'ileri',
+                            currentText: 'Hoje',
+                            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                            dayNamesMin: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                            weekHeader: 'Hf',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            month: 'Mês',
+                            week: 'Semana',
+                            day: 'Dia',
+                            allDayText: 'Tüm Gün'
+                        };
+                    </script>
+                    <style type="text/css">
+                        .value {
+                            width: 1000px;
+                        }
+                    </style>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html> 

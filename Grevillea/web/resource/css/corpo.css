@@ -1,0 +1,43 @@
+/* 
+    Document   : corpo
+    Created on : 11/09/2013, 15:00:01
+    Author     : BLACKLIST
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.ui-panel{
+    background: none !important;
+    border: none !important;
+
+}
+
+#footerForm{
+    padding: 3px !important;
+    margin-top: 10px !important;
+    text-align: left !important;
+}
+
+#total{
+    text-align: right !important; 
+    font-weight: bold !important; 
+    color: #D20005;
+}
+
+.envio{
+    text-align: left !important;
+    float: left !important;
+}
+
+.ui_tpicker_time_label{
+    clear: left;
+    float: left;
+}
+
+.ui_tpicker_hour_label{
+    float: left;
+}
+
+.ui_tpicker_minute_label{
+    float: left;
+}

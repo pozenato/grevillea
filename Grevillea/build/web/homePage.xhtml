@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title>Sistema de Controle de Agendas - Grevillea</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" /> 
+
+        <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/otimo.css"/>
+        <!-- Importação CSS - barra do Governo --> <link rel="stylesheet" href="http://bibliotecaweb.mec.gov.br/barra_do_governo3/css/barra_do_governo.css" />
+
+        <!-- Importação da Biblioteca JQuery --> <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <!-- Importação da Bliblioteca Bootstrap --> <script src="js/bootstrap.js"></script>
+        <!-- Importação das folhas de estilo Bootstrap --> <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/bootstrap.css"/>
+
+    </h:head>
+    <h:body>
+
+        <div id="pagina">
+
+            <div id="headerDegrade">
+                <header>
+
+                    <div class="headerImagens">
+                        <a href="faces/index.xhtml"><img src="#{facesContext.externalContext.requestContextPath}/resource/img/logo4.png" id="logoTopo"/></a>
+
+                    </div>
+
+                </header>
+            </div>
+            <div class="corpo col l12 m12 s12">
+                <div class="col l4 s5 m4">
+                </div>    
+                <div>
+                    <div id="primeira">
+                    </div>    
+                    <h:form id="formSenha">
+                        <p:growl id="growl" showDetail="true" sticky="true" />
+                        <p:panel header="Usuários Cadastrados">
+
+                            <div class="divMsg">
+                                <p:messages id="messages" />
+                                <h:outputLabel value="#{usuarioManagedBean.mensagemErro}" rendered="#{not empty usuarioManagedBean.mensagemErro}"/>
+                            </div>
+                            <div class="indexForm" >
+
+                                <label for="inputID">Usuário :</label>
+                                <h:inputText id="idUsuario" value="#{usuarioManagedBean.idUsuario}" binding="#{usuarioManagedBean.usuarioInput}"
+                                             required="true" label="idldap" requiredMessage="Usuário, Preenchimento Obrigatório"/>                            
+
+                                <label for="inputPassword">Senha :</label>
+                                <h:inputSecret id="Senha" value="#{usuarioManagedBean.password}" 
+                                               required="true" label="Senha" requiredMessage="Senha, Preenchimento Obrigatório" />
+
+                                <h:commandLink action="#{usuarioManagedBean.logar}" styleClass="btn" value="Login" style="margin-left: 10px;"/>
+                                <h:commandLink id="saibaComo" type="submit" action="#{usuarioManagedBean.pesquisar}" styleClass="btn" immediate="true" value="Recuperar Senha"/>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div id="stick"></div>       
+
+    </h:body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Listar Despesas</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Despesas</h4>
+
+                    <h:panelGrid columns="10">
+                        <div class="despesa">
+                            <p:outputLabel value="Data da Despesa" for="dataInit" />
+                            <p:calendar id="dataInit" value="#{fluxoManagedBean.dataInit}" pattern="dd/MM/yyyy" mask="true"
+                                        required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
+                            <p:message for="dataInit"/>  
+                        </div>
+                        <div class="despesa">
+                            <p:outputLabel value="Data da Despesa" for="dataFim"/>
+                            <p:calendar id="dataFim" value="#{fluxoManagedBean.dataFim}" pattern="dd/MM/yyyy" mask="true"
+                                        required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
+                            <p:message for="dataFim"/>  
+                        </div >
+                            <h:commandButton  style="margin-left: 40px; margin-bottom: 10px; " styleClass="btn btn-success" action="#{fluxoManagedBean.ListarDespesasPorData}"
+                                             value="Consultar Despesa" id="consultar"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid class="tamanho995" rendered="#{not empty fluxoManagedBean.despesas}">
+                        <div>
+                            <p:toolbar>                                  
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="despesa" preProcessor="#{fluxoManagedBean.imprimeDespesasPDF}" fileName="despesas" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="despesa" fileName="despesas" preProcessor="#{fluxoManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+
+                        <h:outputText value="Não existem Despesas Lançadas no Periodo" rendered="#{empty fluxoManagedBean.despesas}" />
+
+                        <p:dataTable id="despesa" value="#{fluxoManagedBean.despesas}" var="despesa" rendered="#{not empty fluxoManagedBean.despesas}"
+                                     filteredValue="#{fluxoManagedBean.despesas}" scrollHeight="170" scrollable="true" >
+                            <p:column sortBy="#{despesa.datadespesa}" filterBy="#{despesa.datadespesa}">
+                                <f:facet name="header">
+                                    <h:outputText value="Data da Despesa" />
+                                </f:facet>
+                                <h:outputText value="#{despesa.datadespesa}">
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column sortBy="#{despesa.fornecedor.nomefornecedor}" filterBy="#{despesa.fornecedor.nomefornecedor}">
+                                <f:facet name="header">
+                                    <h:outputText value="Fornecedor"/>
+                                </f:facet>
+                                <h:outputText value="#{despesa.fornecedor.nomefornecedor}" />
+                            </p:column>      
+                            <p:column sortBy="#{despesa.produto.nomeproduto}" filterBy="#{despesa.produto.nomeproduto}">
+                                <f:facet name="header">
+                                    <h:outputText value="Produto"/>
+                                </f:facet>
+                                <h:outputText value="#{despesa.produto.nomeproduto}" />
+                            </p:column> 
+                            <p:column sortBy="#{despesa.tipo}" filterBy="#{despesa.tipo}">
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo"/>
+                                </f:facet>
+                                <h:outputText value="#{despesa.tipo == 'D' ? 'Despesa' : 'Investimento'}" />
+                            </p:column> 
+                            <p:column sortBy="#{despesa.valor}" filterBy="#{despesa.valor}">
+                                <f:facet name="header">
+                                    <h:outputText value="Valor"/>
+                                </f:facet>
+                                <h:outputText value="#{despesa.valor}">
+                                    <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                </h:outputText>
+                            </p:column> 
+                        </p:dataTable>
+                        
+                    </h:panelGrid>
+                    
+                    <h:panelGrid columns="4" class="despesa" rendered="#{not empty fluxoManagedBean.despesas}">
+
+                        <h:outputLabel value="Quantidade de Recebimentos: " for="qtdade" class="resultado-despesa"/>
+                        <p:inputText id="qtdade" value="#{fluxoManagedBean.qtdeDespesas}" readonly="true" style="width: 208px;"/>
+
+                        <h:outputLabel value="Total Recebido: " for="total" class="resultado-despesa"/>
+                        <p:inputText id="total" value="#{fluxoManagedBean.valorTotalDespesas}" readonly="true" style="width: 208px;">
+                            <f:convertNumber pattern="#,##0.00"></f:convertNumber>                       
+                        </p:inputText>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html> 

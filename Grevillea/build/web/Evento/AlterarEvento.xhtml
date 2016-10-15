@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Alterar Evento</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Alterar Evento</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true" /> 
+                    <p:fieldset  style="min-height: 100px;" >
+
+                        <h:panelGrid title="Informações do Cliente" id="cliente" columns="4" style="margin-top: 15px;">
+                            <h:outputLabel for="idcliente" value="Cód. Cliente:" style="font-weight: bold; color: black"/>
+                            <h:outputText id="idclientetx" value="#{eventoManagedBean.evento.cliente.idcliente}"  style="width: 150px;"/>                                  
+
+                            <h:outputLabel for="nomecliente" value="Nome do Cliente:" style="margin-left: 40px;"/>
+                            <p:inputText id="nometx" value="#{eventoManagedBean.evento.cliente.nome}" disabled="true" style="width: 400px;"/>
+
+                            <h:outputLabel for="telfone" value="Telefone:"/>
+                            <p:inputText id="telefone" value="#{eventoManagedBean.evento.cliente.telefone}" disabled="true" style="width: 150px;"/>
+
+                            <h:outputLabel for="email" value="email do Cliente:" style="margin-left: 40px;"/>
+                            <p:inputText id="emailtx" value="#{eventoManagedBean.evento.cliente.email}" disabled="true" style="width: 400px;"/>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
+                    <h:panelGrid id="p1" style="min-width: 995px;">
+
+                        <p:fieldset id="informacoes" style="min-height: 100px;"  >
+
+                            <h:panelGrid columns="4" id="detalhes" >
+                                <h:outputLabel value="Data do Evento" for="dataevento" />
+                                <p:inputText id="dataevento" style="width: 300px;" value="#{eventoManagedBean.evento.iddata}" disabled="true" >
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </p:inputText>
+
+                                <h:outputLabel value="Data Cadastro do Evento" for="datacadastro" style="margin-left: 40px;" />
+                                <p:inputText id="datacadastro" style="width: 160px; " 
+                                             value="#{eventoManagedBean.evento.datacriacao}" disabled="true" >
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </p:inputText>
+
+                                <h:outputLabel value="Usuário Cadastro" for="usuario" />
+                                <p:inputText id="usuario" style="width: 300px;" value="#{eventoManagedBean.evento.usuario.usuario}" disabled="true"/>
+
+                                <h:outputLabel value="Tipo Evento" for="tipo" style="margin-left: 40px;" />
+                                <p:inputText id="tipo1" style="width: 160px;" size="300" value="#{eventoManagedBean.evento.tipo.nometipo}" disabled="true" /> 
+
+
+                                <h:outputLabel value="Status do Evento" for="status" />
+                                <p:inputText id="status1" style="width: 300px;" value="Aguardando Confirmação" rendered="#{eventoManagedBean.evento.ativo == 'A'}" disabled="true"/>
+                                <p:inputText id="status2" style="width: 300px;" value="Confirmado" rendered="#{eventoManagedBean.evento.ativo == 'C'}" disabled="true"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="4" id="casamento" rendered="#{eventoManagedBean.evento.tipo == 'C'}">
+                                <h:outputLabel value="Nome - Noivo(a):" for="nomeconjuge" />
+                                <p:inputText id="nomeconjuge" style="width: 300px;" value="#{eventoManagedBean.evento.nomeconjuge}" /> 
+
+                                <h:outputLabel value="Telefone - Noivo(a):" for="tconjuge" style="margin-left: 40px;" />
+                                <p:inputMask id="tconjuge" style="width: 200px; " 
+                                             value="#{eventoManagedBean.evento.telefoneconjuge}" mask="(999) 99999-9999"/> 
+
+                                <h:outputLabel value="E-Mail - Noivo(a):" for="econjuge" />
+                                <p:inputText id="econjuge" style="width: 300px;" value="#{eventoManagedBean.evento.emailconjuge}"/>
+
+                                <h:outputLabel value="Contato:" for="contato" style="margin-left: 40px;" />
+                                <p:inputText id="contato" style="width: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3" id="valorGrid" >
+                                <h:outputLabel value="Valor Contrato: " for="valor" style="width: 120px"/>
+                                <p:inputText id="valor" value="#{eventoManagedBean.evento.valor}"  
+                                             requiredMessage="Preenchimento Obrigatório" required="true" style="width: 300px;">
+                                    <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                    <p:ajax update="valor" process="valor" event="change" />                            
+                                </p:inputText>
+                                <p:message for="valor"/> 
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="3" id="festa" rendered="#{eventoManagedBean.evento.tipo != 'C'}">
+
+                                <h:outputLabel value="Contato:" for="contato" />
+                                <p:inputText id="contato1" style="width: 300px; margin-left:60px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato"/>
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3" id="observacao" >
+                                <h:outputLabel value="Observação:" for="observacao" />
+                                <p:inputTextarea id="descricao" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 700px; max-width: 483px; margin-left: 30px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/> 
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3">
+                                <h:outputText value=" "/>
+                            </h:panelGrid>                            
+
+                        </p:fieldset> 
+                        <p:fieldset  id="avancar">
+
+                            <p:growl id="message" showDetail="true" />    
+
+                            <p:commandButton value="Confirmar Evento" action="#{eventoManagedBean.Alterar}" update="message" style="margin-left: 10px;" styleClass="btn btn-success" >
+                                <p:confirm header="Confirmação" message="Deseja realmente confirmar definitivamente esse evento?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" style="margin-left: 10px;" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" style="margin-right: 10px; margin-left: 70px; " icon="ui-icon-close" />
+                            </p:confirmDialog>    
+
+                            <h:commandButton style="margin-left: 40%;" styleClass="btn btn-danger" action="#{eventoManagedBean.Excluir}" value="Excluir Evento" id="excluir"/>
+
+
+                        </p:fieldset>
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"   
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Inserir Fornecedor</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Fornecedores</h4>
+                <h:form>
+                    <h:panelGrid columns="3" class="tamanho995">
+
+                        <h:panelGrid columns="3"  cellpadding="5" >
+                            <h:outputLabel value="Nome do Fornecedor: " for="nome"/>
+                            <p:inputText id="nome" value="#{fornecedorManagedBean.fornecedor.nomefornecedor}" required="true"
+                                         requiredMessage="Preenchimento Obrigatório" style="width: 600px;"/>
+                            <p:message for="nome"/>
+                            
+                            <h:outputLabel value="Endereco: " for="endereco"/>
+                            <p:inputText id="endereco" value="#{fornecedorManagedBean.fornecedor.endereco}" 
+                                         requiredMessage="Preenchimento Obrigatório" required="true" style="width: 600px;"/>
+                            <p:message for="endereco"/>
+                            
+                            <h:outputLabel value="Cidade: " for="cidade"/>
+                            <p:inputText id="cidade" value="#{fornecedorManagedBean.fornecedor.cidade}" 
+                                         requiredMessage="Preenchimento Obrigatório" required="true"  style="width: 600px;"/>
+                            <p:message for="cidade"/>
+                            
+                            <h:outputLabel value="Telefone: " for="telefone"/>
+                            <p:inputMask id="telefone" value="#{fornecedorManagedBean.fornecedor.telefone}" 
+                                         requiredMessage="Preenchimento Obrigatório" required="true" mask="(999) 99999-9999" style="width: 600px;"/>
+                            <p:message for="telefone"/>
+                            
+                            <h:outputLabel value="E-mail: " for="email"/>
+                            <p:inputText id="email" value="#{fornecedorManagedBean.fornecedor.email}"  style="width: 600px;">
+                                <f:validator validatorId="validateEmail"/>
+                            </p:inputText>
+                            <p:message for="email"/>
+                            
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{fornecedorManagedBean.Inserir}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{fornecedorManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

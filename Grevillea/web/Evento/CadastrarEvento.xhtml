@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Cadrastrar Evento</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Evento</h4>
+                <h:form>
+                    <p:fieldset style="min-height: 100px;" >
+
+                        <h:panelGrid  id="gridbusca" columns="5" style="margin-top: 15px;">
+                            <h:outputLabel for="busca" value="Informe o nome do Cliente:" style="margin-top: 10px;"/>
+                            <p:inputText id="busca" value="#{eventoManagedBean.cliente.nome}" style="width: 300px; margin-top: 10px;"/>                                  
+                            <h:commandButton style="margin-left: 10px; " styleClass="btn-info btn-small" action="#{eventoManagedBean.consultarClienteEvento}" value="Consultar Cliente" id="consultar"/>    
+
+                            <p:growl id="message" showDetail="true" />
+
+                            <p:commandButton value="Cadastrar Cliente" action="#{eventoManagedBean.montarPaginaParaInsercaoCliente}" update="message" style="margin-left: 10px;" styleClass="btn btn-success" >
+                                <p:confirm header="Confirmação" message="Deseja Cadastrar um novo Cliente?" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" style="margin-left: 10px;" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" style="margin-right: 10px; margin-left: 70px; " icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </h:panelGrid>
+
+                        <h:panelGrid id="listacliente" rendered="#{eventoManagedBean.rendercliente == 3}">  
+                            
+                            <h:outputText value="Não existem Clientes Cadastrados que atendam esse critério de busca!" rendered="#{empty eventoManagedBean.clientes}" />
+
+                            <p:dataTable value="#{eventoManagedBean.clientes}" var="documento" rendered="#{not empty eventoManagedBean.clientes}">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Cód. Cliente" />
+                                    </f:facet>
+                                    <h:outputText value="#{documento.idcliente}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome Cliente" />
+                                    </f:facet>
+                                    <h:outputText value="#{documento.nome}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Email Cliente" />
+                                    </f:facet>
+                                    <h:outputText value="#{documento.email}" />
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Telefone Cliente " />
+                                    </f:facet>
+                                    <h:outputText value="#{documento.telefone}" />
+                                </p:column>
+                                <p:column exportable="false">
+                                    <f:facet name="header">
+                                        <h:outputText value=" "/>
+                                    </f:facet>
+                                    <h:commandButton styleClass="btn btn-info btn-small" action="#{eventoManagedBean.selecionarCliente}" value="Selecionar">
+                                        <f:setPropertyActionListener value="#{documento}" target="#{eventoManagedBean.clienteRecuperado}" />  
+                                    </h:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+
+                        <h:panelGrid  id="cliente" columns="4" style="margin-top: 15px;" rendered="#{eventoManagedBean.rendercliente == 1}">
+                            <h:outputLabel for="idcliente" value="Cód. Cliente:"/>
+                            <p:inputText id="idclientetx" value="#{eventoManagedBean.clienteRecuperado.idcliente}" disabled="true" style="width: 100px;"/>                                  
+
+                            <h:outputLabel for="nomecliente" value="Nome do Cliente:" style="margin-left: 40px;"/>
+                            <p:inputText id="nometx" value="#{eventoManagedBean.clienteRecuperado.nome}" disabled="true" style="width: 350px;"/>
+
+                            <h:outputLabel for="telfone" value="Telefone:"/>
+                            <p:inputText id="telefone" value="#{eventoManagedBean.clienteRecuperado.telefone}" disabled="true" style="width: 100px;"/>
+
+                            <h:outputLabel for="email" value="email do Cliente:" style="margin-left: 40px;"/>
+                            <p:inputText id="emailtx" value="#{eventoManagedBean.clienteRecuperado.email}" disabled="true" style="width: 350px;"/>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
+                    <h:panelGrid id="p1" style="min-width: 995px;">
+
+                        <p:fieldset id="informacoes" style="min-height: 100px;" rendered="#{eventoManagedBean.rendercliente == 1}" >
+                            <h:panelGrid columns="1">
+                                <h:outputLabel value="Selecione o tipo de Evento:" for="tipo" />                            
+                                <p:selectOneMenu id="tipo" value="#{eventoManagedBean.render}">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{eventoManagedBean.tipoItens}" />                                  
+                                    //   <f:ajax event="change" render="p1"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3" id="casamento" rendered="#{eventoManagedBean.render==1}">
+                                <h:outputLabel value="Nome - Noivo(a):" for="nomeconjuge" />
+                                <p:inputText id="nomeconjuge" style="width: 500px;" value="#{eventoManagedBean.evento.nomeconjuge}" required="true" requiredMessage="Preenchimento Obrigatório"/> 
+                                <p:message for="nomeconjuge"/>
+
+                                <h:outputLabel value="Telefone - Noivo(a):" for="tconjuge" />
+                                <p:inputMask id="tconjuge" style="width: 200px; margin-right: 300px;" value="#{eventoManagedBean.evento.telefoneconjuge}" 
+                                             required="true" requiredMessage="Preenchimento Obrigatório" mask="(999) 99999-9999"/> 
+                                <p:message for="tconjuge"/>
+
+                                <h:outputLabel value="E-Mail - Noivo(a):" for="econjuge" />
+                                <p:inputText id="econjuge" style="width: 500px;" value="#{eventoManagedBean.evento.emailconjuge}">
+                                    <f:validator validatorId="validateEmail"/>
+                                </p:inputText>
+                                <p:message for="econjuge"/>
+
+                                <h:outputLabel value="Contato:" for="contato" />
+                                <p:inputText id="contato" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato"/>
+
+                                <h:outputLabel value="Observação:" for="observacao" />
+                                <p:inputTextarea id="descricao" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 500px; max-width: 483px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/>     
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="3" id="aniversario" rendered="#{eventoManagedBean.render > 5}">
+                                
+                                <h:outputLabel value="Nome do Aniversariante" for="anivesariante" />
+                                <p:inputText id="anivesariante" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.nomeaniversariante}" /> 
+                                <p:message for="anivesariante"/>                                
+                                
+                                <h:outputLabel value="Contato:" for="contato1" />
+                                <p:inputText id="contato1" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato1"/>
+
+                                <h:outputLabel value="Observação" for="observacao1" />
+                                <p:inputTextarea id="descricao1" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 500px; max-width: 483px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/>     
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="3" id="coorporativo" rendered="#{eventoManagedBean.render == 2}">
+                                
+                                <h:outputLabel value="Nome da Empresa" for="empresa" />
+                                <p:inputText id="empresa" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.empresa}" /> 
+                                <p:message for="empresa"/>                                
+                                
+                                <h:outputLabel value="Contato:" for="contato2" />
+                                <p:inputText id="contato2" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato2"/>
+
+                                <h:outputLabel value="Observação" for="observacao2" />
+                                <p:inputTextarea id="descricao2" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 500px; max-width: 483px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/>     
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="3" id="beneficiente" rendered="#{eventoManagedBean.render == 3}">
+                                
+                                <h:outputLabel value="Nome da Instituição" for="instituicao" />
+                                <p:inputText id="instituicao" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.instituicao}" /> 
+                                <p:message for="instituicao"/>                                
+                                
+                                <h:outputLabel value="Contato:" for="contato3" />
+                                <p:inputText id="contato3" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato3"/>
+
+                                <h:outputLabel value="Observação" for="observacao" />
+                                <p:inputTextarea id="descricao3" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 500px; max-width: 483px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/>     
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="3" id="formatura" rendered="#{eventoManagedBean.render == 4}">
+                                
+                                <h:outputLabel value="Nome da Escola" for="escola" />
+                                <p:inputText id="escola" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.instituicao}" /> 
+                                <p:message for="escola"/>                                
+                                
+                                <h:outputLabel value="Contato:" for="contato4" />
+                                <p:inputText id="contato4" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato4"/>
+
+                                <h:outputLabel value="Observação" for="observacao4" />
+                                <p:inputTextarea id="descricao4" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 500px; max-width: 483px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/>     
+                            </h:panelGrid>
+                            
+                            
+                            <h:panelGrid columns="3" id="eventoGrevillea" rendered="#{eventoManagedBean.render == 5}">
+                                
+                                <h:outputLabel value="Contato:" for="contato5" />
+                                <p:inputText id="contato5" style="width: 300px; margin-right: 200px;" size="300" value="#{eventoManagedBean.evento.contato}" /> 
+                                <p:message for="contato5"/>
+
+                                <h:outputLabel value="Observação" for="observacao5" />
+                                <p:inputTextarea id="descricao5" value="#{eventoManagedBean.evento.observacao}" autoResize="false"
+                                                 rows="5" style="min-width: 500px; max-width: 483px; width: 100% !important;
+                                                 background-color: #FFFFFF; text-align: left "/>     
+                            </h:panelGrid>
+
+                        </p:fieldset> 
+                        <p:fieldset  id="avancar" rendered="#{eventoManagedBean.render!=0}">
+                            <div id="footerForm" class="title ui-widget-header ui-corner-all" >
+                                <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{eventoManagedBean.Inserir}" value="Cadastrar Evento" id="cadastrar"/>
+                                <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{produtoManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                            </div>
+                        </p:fieldset>
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

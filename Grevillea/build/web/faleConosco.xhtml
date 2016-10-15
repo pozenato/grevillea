@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title>Assistencia Estudantil - Ufscar</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" /> 
+
+        <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/otimo.css"/>
+        <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/corpo.css"/>
+        <!-- Importação CSS - barra do Governo --> <link rel="stylesheet" href="http://bibliotecaweb.mec.gov.br/barra_do_governo3/css/barra_do_governo.css" />
+
+        <!-- Importação da Biblioteca JQuery --> <script src="js/jquery-1.9.1.min.js"></script>
+        <!-- Importação da Bliblioteca Bootstrap --> <script src="js/bootstrap.js"></script>
+        <!-- Importação das folhas de estilo Bootstrap --> <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/bootstrap.css"/>
+    </h:head>
+
+    <h:body>
+        <div id="barra-brasil-v3" class="barraGovernoPreto"> <div id="barra-brasil-v3-marca">Brasil</div> </div>
+
+        <div id="pagina">
+
+            <div id="headerDegrade">
+                <header>
+
+                    <div class="headerImagens">
+                        <a href="../faces/index.xhtml"><img src="#{facesContext.externalContext.requestContextPath}/resource/img/logo.png" id="logoTopo"/></a>
+
+                        <div id="headerDireita">
+                            <a href="../faces/faleConosco.xhtml" id="faleConosco" class="btn btn-primary" >Fale Conosco</a>
+                            <a href="../faces/homeAdmin.xhtml" id="perguntaFrequente" class="btn btn-primary" >Perguntas Frequente</a>
+                            <br/>
+                        </div>
+
+                    </div>
+
+
+                </header>
+            </div>
+
+            <div class="corpo">
+
+                <section>
+
+                    <div id="corpoAdmin" style="padding-top: 20px;">
+                        <ui:insert name="content"> 
+                            <article>
+                                <h4 class="title ui-widget-header ui-corner-all" >Fale Conosco</h4>
+                                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+
+                                <h:form>
+                                    <div style="margin-left: 30px;">
+                                        <h:panelGrid columns="2">
+                                            <h:outputLabel value="Nome:" for="nome" />
+                                            <p:inputText id="nome" value="#{faleManagedBean.nome}" style="width: 500px;" 
+                                                         required="true" requiredMessage="Campo de Preenchimento Obrigatório"/>
+                                            <h:outputLabel value="E-mail:" for="email"  />
+                                            <p:inputText id="email" value="#{faleManagedBean.destmail}" style="width: 500px;" 
+                                                         required="true" requiredMessage="Campo de Preenchimento Obrigatório"/>
+                                            <h:outputLabel value="Assunto:" for="assunto" />
+                                            <p:inputText id="assunto" value="#{faleManagedBean.titulo}" style="width: 500px;" 
+                                                         required="true" requiredMessage="Campo de Preenchimento Obrigatório"/>
+                                        </h:panelGrid>
+                                        <h:panelGrid columns="1">
+                                            <h:outputLabel value="Mensagem:" for="mensagem"/>
+                                            <h:inputTextarea id="mensagem" value="#{faleManagedBean.assunto}" style="width: 560px; height: 200px; text-align: left !important" 
+                                                             required="true" requiredMessage="Campo de Preenchimento Obrigatório"/>
+                                        </h:panelGrid>
+                                    </div>
+                                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                                        <p:commandLink style="margin-left: 10px;" styleClass="btn btn-success" id="inserir" action="#{faleManagedBean.emailFale}" value="Enviar"/>
+                                        <p:commandLink style="margin-right: 10px; float: right" styleClass="btn" id="cancelar" action="/homePage" value="Voltar"  immediate="true"/>
+                                    </div>
+
+                                </h:form>
+
+                            </article>
+                        </ui:insert>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <br />
+
+        <div id="stick"></div>
+
+        <footer>
+            <div id="footer">
+                <p>© 2015, Grevillea - Todos os direitos reservados</p>
+            </div>
+        </footer>
+    </h:body>
+</html>

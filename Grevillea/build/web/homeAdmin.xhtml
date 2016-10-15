@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title>Espaço Grevillea</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" /> 
+
+        <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/otimo.css"/>
+        <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/corpo.css"/>
+        <!-- Importação CSS - barra do Governo --> <link rel="stylesheet" href="http://bibliotecaweb.mec.gov.br/barra_do_governo3/css/barra_do_governo.css" />
+        <!-- Importação JS Locale --> <script src="#{facesContext.externalContext.requestContextPath}/resource/js/primefaces-locale.js"></script>
+
+        <!-- Importação da Biblioteca JQuery --> <script src="#{facesContext.externalContext.requestContextPath}/js/jquery-1.9.1.min.js"></script>
+        <!-- Importação da Bliblioteca Bootstrap --> <script src="#{facesContext.externalContext.requestContextPath}/js/bootstrap.js"></script>
+        <!-- Importação das folhas de estilo Bootstrap --> <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/bootstrap.css"/>
+    </h:head>
+
+    <h:body>
+     <f:metadata>  
+         <f:event type="preRenderView" listener="#{usuarioManagedBean.verificaLogin()}"/>  
+        </f:metadata>        
+         
+        <div id="pagina">
+
+            <div id="headerDegrade">
+                <header>
+
+                    <div class="headerImagens">
+                        <a href=".././faces/index.xhtml"><img src="#{facesContext.externalContext.requestContextPath}/resource/img/logo.png" id="logoGrevillea"/></a>
+
+                        <div id="headerDireita">
+                           <br/>
+                            <img src="#{facesContext.externalContext.requestContextPath}/resource/img/administrativo.png" id="logoAdmin"/>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="corpo">
+                <div id="menu">
+                    <h:form>
+                        <p:menubar style="padding-left:25%"> 
+                            <p:submenu label="Cadastro" icon="ui-icon-document">                                
+                                <p:menuitem value="Clientes" icon="ui-icon-person" action="#{clienteManagedBean.listar}"/>
+                                <p:menuitem value="Usuário" icon="ui-icon-person" action="#{usuarioManagedBean.listar}"/>
+                                <p:menuitem value="Fornecedor" icon="ui-icon-person" action="#{fornecedorManagedBean.listar}"/>
+                                <p:menuitem value="Colaborador" icon="ui-icon-person" action="#{colaboradorManagedBean.listar}"/>
+                                <p:menuitem value="Terceiros" icon="ui-icon-person" action="#{terceiroManagedBean.listar}"/>
+                                <p:separator />
+                                <p:menuitem value="Produto" icon="ui-icon-comment" action="#{produtoManagedBean.listar}" />
+                                <p:menuitem value="Itens" icon="ui-icon-comment" action="#{itemManagedBean.listar}"/>                                
+                                <p:menuitem value="Tipo Colaborador" icon="ui-icon-comment" action="#{tipoColaboradorManagedBean.listar}" />
+                            </p:submenu>
+
+                            <p:submenu label="Evento" icon="ui-icon-folder-collapsed">
+                                <p:menuitem value="Cadastrar Evento" icon="ui-icon-contact" action="#{eventoManagedBean.montarPaginaParaInsercao}" />
+                                <p:menuitem value="Calendário Eventos" icon="ui-icon-contact" action="#{eventoManagedBean.montarPaginaParaListar}" />
+                                <p:menuitem value="Consultar Eventos" icon="ui-icon-contact" action="#{eventoManagedBean.montaPaginaParaListarAlteracao}" />
+                                <p:menuitem value="Eventos Detalhes" icon="ui-icon-contact" action="#{eventoManagedBean.montaPaginaParaListarConfirmados}" />
+                                <p:menuitem value="Cadastrar Pagamento " icon="ui-icon-contact" action="#{eventoManagedBean.montarPaginaParaCadastrarPagamento}" />
+                            </p:submenu>
+                            
+                            <p:submenu label="Fluxo Caixa" icon="ui-icon-folder-collapsed">
+                                <p:menuitem value="Inserir nova Despesa" icon="ui-icon-calculator" action="#{fluxoManagedBean.montarPaginaParaInsercao}" />
+                                <p:menuitem value="Listar Despesas" icon="ui-icon-calculator" action="#{fluxoManagedBean.montarPaginaParaPesquisarDespesa}" />
+                                <p:menuitem value="Listar Recebimento" icon="ui-icon-calculator" action="#{eventoManagedBean.montarPaginaParaPesquisarPagamento()}" />                                
+                            </p:submenu>
+
+                            <p:submenu label="Consultas" icon="ui-icon-circle-zoomin">
+                                <p:menuitem value="Clientes" icon="ui-icon-person" action="#{clienteManagedBean.listar}"/>
+                                <p:menuitem value="Usuário" icon="ui-icon-person" action="#{usuarioManagedBean.listar}"/>
+                                <p:menuitem value="Fornecedor" icon="ui-icon-person" action="#{fornecedorManagedBean.listar}"/>
+                                <p:menuitem value="Colaborador" icon="ui-icon-person" action="#{colaboradorManagedBean.listar}"/>
+                                <p:menuitem value="Terceiros" icon="ui-icon-person" action="#{terceiroManagedBean.listar}"/>
+                                <p:separator />
+                                <p:menuitem value="Produto" icon="ui-icon-comment" action="#{produtoManagedBean.listar}" />
+                                <p:menuitem value="Itens" icon="ui-icon-comment" action="#{itemManagedBean.listar}"/>                                
+                                <p:menuitem value="Tipo Colaborador" icon="ui-icon-comment" action="#{tipoColaboradorManagedBean.listar}" />                                
+                            </p:submenu>
+                          
+                            <p:menuitem value="Sair" action="#{usuarioManagedBean.deslogar}" icon="ui-icon-circle-close" />
+
+                        </p:menubar>
+                    </h:form>
+                </div>
+
+                <section>
+                    <div id="corpoAdmin">
+
+                        <article style="min-height: 400px;">
+                            <ui:insert name="content"> 
+
+                            </ui:insert>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <br />
+
+        <div id="stick"></div>
+
+    </h:body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Alterar Usuário</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Alterar Usuário</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true"/>
+                    <h:panelGrid columns="3" class="tamanho995">
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Nome: " for="nome"/>
+                                <p:inputText id="nome" value="#{usuarioManagedBean.usuario.nomeusuario}" required="true"
+                                              style="width: 400px;"/>
+                                <p:message for="nome"/>
+
+                                <h:outputLabel value="Usuário: " for="usuario"/>
+                                <p:inputText id="usuario" value="#{usuarioManagedBean.usuario.usuario}" required="true"
+                                              style="width: 400px;"/>
+                                <p:message for="usuario"/>
+                                
+                                <h:outputLabel value="Email: " for="email"/>
+                                <p:inputText id="email" value="#{usuarioManagedBean.usuario.email}" required="true"
+                                             requiredMessage="Preenchimento Obrigatório" style="width: 400px;" />
+                                <p:message for="email"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" id="matchGrid" cellpadding="5">                   
+                                <h:outputLabel for="pwd1" value="Informe a Senha: *" />
+                                <p:password id="pwd1" value="#{usuarioManagedBean.usuario.senha}" match="pwd2" label="Senha" required="true" 
+                                            feedback="true" promptLabel="For favor, Digite a senha" weakLabel="Fraca"
+                                            goodLabel="Boa" strongLabel="Forte" />
+
+                                <h:outputLabel for="pwd2" value="Confirme a Senha: *" />
+                                <p:password id="pwd2" value="#{usuarioManagedBean.usuario.senha}" label="Confirmação da Senha" required="true" />
+                            </h:panelGrid>
+
+                            <h:outputText value=" "/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{usuarioManagedBean.Alterar}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{usuarioManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

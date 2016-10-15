@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+
+            <ui:define name="title">Listar Produtos</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Produtos Cadastrados</h4>
+                    <h:panelGrid class="tamanho995">
+                        <div>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="left">
+                                    <h:commandLink styleClass="btn btn-success btn-small" action="#{produtoManagedBean.montarPaginaParaInsercao}" value="Adicionar Produtos" />
+                                </p:toolbarGroup>  
+
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="produto" preProcessor="#{produtoManagedBean.imprimePDF}" fileName="Produtos" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="produto" fileName="Produtos" preProcessor="#{produtoManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+                        <h:outputText value="Não existem produtos cadastrados !!!" rendered="#{empty produtoManagedBean.produtos}" />
+
+                        <p:dataTable id="produto" value="#{produtoManagedBean.produtos}" var="produto" rendered="#{not empty produtoManagedBean.produtos}"
+                                     scrollHeight="270" scrollable="true" filteredValue="#{produtoManagedBean.produtoFiltro}">
+                            <p:column sortBy="#{produto.nomeproduto}" filterBy="#{produto.nomeproduto}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nome do Produto" />
+                                </f:facet>
+                                <h:outputText value="#{produto.nomeproduto}" />
+                            </p:column>
+                            <p:column sortBy="#{produto.marcaproduto}"  filterBy="#{produto.marcaproduto}">
+                                <f:facet name="header">
+                                    <h:outputText value="Marca do Produto" />
+                                </f:facet>
+                                <h:outputText value="#{produto.marcaproduto}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html> 

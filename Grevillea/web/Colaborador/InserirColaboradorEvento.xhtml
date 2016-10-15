@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Adicionar Colaboradores ao Evento</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Adcionar Colaboradores ao Evento</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true"/>
+                    <h:panelGrid columns="3" class="tamanho995">
+                        
+                        <h:outputText value="Nenhum Colaboradores Adicionado" rendered="#{empty eventoManagedBean.colaboradoresAdd}" />
+
+                        <p:dataTable id="colaboradorAdd" value="#{eventoManagedBean.colaboradoresAdd}" var="colaboradorAdd" rendered="#{not empty eventoManagedBean.colaboradoresAdd}">
+                                <p:column sortBy="#{colaboradorAdd.nome}" filterBy="#{colaboradorAdd.nome}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome do Colaborador" />
+                                    </f:facet>
+                                    <h:outputText value="#{colaboradorAdd.nome}"/>
+                                </p:column>
+                                <p:column sortBy="#{colaboradorAdd.tipo.descricao}" filterBy="#{colaboradorAdd.tipo.descricao}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{colaboradorAdd.tipo.descricao}" />
+                                </p:column>      
+                                <p:column sortBy="#{colaboradorAdd.status}" filterBy="#{colaboradorAdd.status}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Status Colaborador"/>
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{colaboradorAdd.status}" disabled="true"/>
+                                </p:column> 
+
+                                <p:column exportable="false">
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.montaPaginaParaAlteracao}" value="Remover"/>
+                                                                         
+                                </p:column>
+                            </p:dataTable>
+                        
+                    </h:panelGrid>
+                    <h:form></h:form>
+                    <h:panelGrid></h:panelGrid>
+                    
+                    
+                    <h:panelGrid>
+                        
+                        <h:outputText value="Não existem Colaboradores cadastrados" rendered="#{empty eventoManagedBean.colaboradores}" />
+
+                            <p:dataTable id="colaborador" value="#{eventoManagedBean.colaboradores}" var="colaborador" rendered="#{not empty eventoManagedBean.colaboradores}">
+                                <p:column sortBy="#{colaborador.nome}" filterBy="#{colaborador.nome}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome do Colaborador" />
+                                    </f:facet>
+                                    <h:outputText value="#{colaborador.nome}"/>
+                                </p:column>
+                                <p:column sortBy="#{colaborador.tipo.descricao}" filterBy="#{colaborador.tipo.descricao}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{colaborador.tipo.descricao}" />
+                                </p:column>      
+                                <p:column sortBy="#{colaborador.status}" filterBy="#{colaborador.status}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Status Colaborador"/>
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
+                                </p:column> 
+
+                                <p:column exportable="false">
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{colaboradorManagedBean.Inserir}" value="Salvar" id="confirmar"/>                                
+                                </p:column>
+                            </p:dataTable>
+                        
+                    </h:panelGrid>
+                        
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

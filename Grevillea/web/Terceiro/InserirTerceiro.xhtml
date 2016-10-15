@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Cadastrar Terceiros</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Terceiros</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true"/>
+                    <h:panelGrid columns="3" class="tamanho995">
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Nome do Terceiro " for="nome"/>
+                                <p:inputText id="nome" value="#{terceiroManagedBean.terceiro.nome}" required="true"
+                                             requiredMessage="Preenchimento Obrigatório" style="width: 400px;"/>
+                                <p:message for="nome"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Tipo de Terceiro" for="tipo" style="width: 125px"/>                            
+                                <p:selectOneMenu id="tipo" value="#{terceiroManagedBean.render}">
+                                    <f:selectItem itemValue="0" itemLabel="Selecione:"/>
+                                    <f:selectItem itemValue="1" itemLabel="Banda"/>
+                                    <f:selectItem itemValue="2" itemLabel="Fotografo"/>
+                                    <f:selectItem itemValue="3" itemLabel="Decorador"/>
+                                    <f:selectItem itemValue="4" itemLabel="Confeiteiro"/>
+                                    <f:selectItem itemValue="5" itemLabel="Cerimonialista"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:outputText value=" "/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{terceiroManagedBean.Inserir}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{terceiroManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

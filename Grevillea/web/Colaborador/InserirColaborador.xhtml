@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Cadastrar Colaboradores</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Colaboradores</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true"/>
+                    <h:panelGrid columns="3" class="tamanho995">
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Nome do Colaborador " for="nome"/>
+                                <p:inputText id="nome" value="#{colaboradorManagedBean.colaborador.nome}" required="true"
+                                             requiredMessage="Preenchimento Obrigatório" style="width: 400px;"/>
+                                <p:message for="nome"/>
+                                
+                                <h:outputLabel value="Tipo Colaborador:" for="idTipoSelecionado"/>
+                                <h:selectOneMenu id="idTipoSelecionado" value="#{colaboradorManagedBean.idTipoSelecionado}" style="padding-left: -46%" 
+                                                 requiredMessage="Preenchimento Obrigatório" required="true">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{colaboradorManagedBean.tiposColaborador}"/>
+                                </h:selectOneMenu>
+                                <p:message for="idTipoSelecionado"/> 
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:outputText value=" "/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{colaboradorManagedBean.Inserir}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{colaboradorManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

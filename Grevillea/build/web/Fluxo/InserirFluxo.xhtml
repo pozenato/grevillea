@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"   
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Inserir Despesas</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Despesas</h4>
+                <h:form>
+                    <h:panelGrid columns="3" id="p1" class="tamanho995">
+
+                        <h:panelGrid columns="3"  cellpadding="5"  >
+
+                            <p:outputLabel value="Data da Despesa" for="datadespesa"/>
+                            <p:calendar id="datadespesa" value="#{fluxoManagedBean.fluxo.datadespesa}" pattern="dd/MM/yyyy" mask="true"
+                                        required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
+                            <p:message for="datadespesa"/>  
+
+                            <h:outputLabel value="Selecione o tipo da Despesa:" for="tipo" />                            
+                            <h:selectOneMenu id="tipo" value="#{fluxoManagedBean.render}" required="true" requiredMessage="Preenchimento Obrigatório">
+                                <f:selectItem itemValue="0" itemLabel="Selecione:"/>
+                                <f:selectItem itemValue="1" itemLabel="Despesa com Evento"/>
+                                <f:selectItem itemValue="2" itemLabel="Investimento"/>
+                                <f:ajax event="change" render="p1" />
+                            </h:selectOneMenu>
+                            <p:message for="tipo"/>  
+
+                            <h:outputLabel value="Fornecedor:" for="idDoFornecedorSelecionado"/>
+                            <h:selectOneMenu id="idDoFornecedorSelecionado" value="#{fluxoManagedBean.idDoFornecedorSelecionado}" 
+                                             requiredMessage="Preenchimento Obrigatório" required="true">
+                                <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                <f:selectItems value="#{fluxoManagedBean.fornecedores}"/>
+                            </h:selectOneMenu>
+                            <p:message for="idDoFornecedorSelecionado"/>  
+
+                            <h:outputLabel value="Produto:" for="idDoProdutoSelecionado"/>
+                            <h:selectOneMenu id="idDoProdutoSelecionado" value="#{fluxoManagedBean.idDoProdutoSelecionado}" 
+                                             requiredMessage="Preenchimento Obrigatório" required="true">
+                                <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                <f:selectItems value="#{fluxoManagedBean.produtos}"/>
+                            </h:selectOneMenu>    
+                            <p:message for="idDoProdutoSelecionado"/>
+
+                            <h:outputLabel value="Valor: " for="valor"/>
+                            <p:inputText id="valor" value="#{fluxoManagedBean.fluxo.valor}"  
+                                         requiredMessage="Preenchimento Obrigatório" required="true" style="width: 208px;">
+                                <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                <p:ajax update="valor" process="valor" event="change" />                            
+                            </p:inputText>
+                            <p:message for="valor"/>  
+
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{fluxoManagedBean.Inserir}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{fornecedorManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Detalhes do Evento</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Detalhes do Evento</h4>
+                <h:form>
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:tabView>
+                        <p:tab title="Detalhes do Evento">
+                            <p:messages id="messages" autoUpdate="true" closable="true" /> 
+                            <p:fieldset  style="min-height: 100px;" >
+
+                                <h:panelGrid title="Informações do Cliente" id="cliente" columns="4" style="margin-top: 15px;">
+
+                                    <h:outputLabel for="idcliente" value="Cód. Cliente:" style="font-weight: bold; width: 180px; color: black; font-size: initial"/>
+                                    <h:outputText id="idclientetx" value="#{eventoManagedBean.evento.cliente.idcliente}"  style="width: 150px; text-align: left !important; font-size: initial"/>                                   
+
+                                    <h:outputLabel for="nomecliente" value="Nome do Cliente:" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial"/>
+                                    <h:outputText id="nometx" value="#{eventoManagedBean.evento.cliente.nome}"  style="width: 400px; font-size: initial"/>
+
+                                    <h:outputLabel for="telfone" value="Telefone:" style="font-weight: bold; color: black; width: 180px; font-size: initial"/>
+                                    <h:outputText id="telefone" value="#{eventoManagedBean.evento.cliente.telefone}"  style="width: 150px; font-size: initial"/>
+
+                                    <h:outputLabel for="email" value="Email do Cliente:" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial"/>
+                                    <h:outputText id="emailtx" value="#{eventoManagedBean.evento.cliente.email}"  style="width: 400px; font-size: initial"/>
+
+                                    <h:outputLabel value="Data do Evento" for="dataevento" style="font-weight: bold; color: black; width: 180px; font-size: initial" />
+                                    <h:outputText id="dataevento" style="width: 300px; font-size: initial" value="#{eventoManagedBean.evento.iddata}" >
+                                        <f:convertDateTime type="date" dateStyle="medium"/>
+                                    </h:outputText>
+
+                                    <h:outputLabel value="Data Cadastro do Evento" for="datacadastro" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial" />
+                                    <h:outputText id="datacadastro" style="width: 160px; font-size: initial" 
+                                                  value="#{eventoManagedBean.evento.datacriacao}"  >
+                                        <f:convertDateTime type="date" dateStyle="medium"/>
+                                    </h:outputText>
+
+                                    <h:outputLabel value="Usuário Cadastro" for="usuario" style="font-weight: bold; color: black; width: 180px; font-size: initial" />
+                                    <h:outputText id="usuario" style="width: 300px; font-size: initial" value="#{eventoManagedBean.evento.usuario.usuario}" />
+
+                                    <h:outputLabel value="Tipo Evento" for="tipo" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial" />
+                                    <h:outputText id="tipo1" style="width: 160px; font-size: initial"  value="#{eventoManagedBean.evento.tipo.nometipo}"  /> 
+
+                                    <h:outputLabel value="Status do Evento" for="status" style="font-weight: bold; color: black; width: 180px; font-size: initial" />
+                                    <h:outputText id="status1" style="width: 300px; font-size: initial" value="Aguardando Confirmação" rendered="#{eventoManagedBean.evento.ativo == 'A'}" />
+                                    <h:outputText id="status2" style="width: 300px; font-size: initial" value="Confirmado" rendered="#{eventoManagedBean.evento.ativo == 'C'}" />
+
+                                    <h:outputLabel value="Contato:" for="contato" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial" />
+                                    <h:outputText id="contato" style="width: 200px; font-size: initial"  value="#{eventoManagedBean.evento.contato}" /> 
+                                </h:panelGrid>  
+                            </p:fieldset>
+
+                            <h:panelGrid columns="2" id="casamento" rendered="#{eventoManagedBean.evento.tipo.idtipo == 1}">
+                                <p:fieldset  style="min-width: 928px;" >
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel value="Nome - Noivo(a):" for="nomeconjuge" style="width: 180px; font-weight: bold; color: black; font-size: initial"/>
+                                        <h:outputText id="nomeconjuge" style="width: 300px; font-size: initial" value="#{eventoManagedBean.evento.nomeconjuge}" /> 
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel value="Telefone - Noivo(a):" for="tconjuge" style="width: 180px; font-weight: bold; color: black; font-size: initial" />
+                                        <h:outputText id="tconjuge" style="width: 300px; font-size: initial" value="#{eventoManagedBean.evento.telefoneconjuge}"/> 
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel value="E-Mail - Noivo(a):" for="econjuge" style="width: 180px; font-weight: bold; color: black; font-size: initial"/>
+                                        <h:outputText id="econjuge" style="width: 300px; font-size: initial" value="#{eventoManagedBean.evento.emailconjuge}"/>                                                                             
+                                    </h:panelGrid>                                    
+                                </p:fieldset>                                    
+                            </h:panelGrid>
+                            <p:fieldset>
+                                <h:panelGrid columns="2" >
+                                    <h:outputLabel value="Valor do Contrato:" for="valor1" style="width: 180px; font-weight: bold; color: blue; font-size: initial" />
+                                    <h:outputText id="valor1" style="width: 300px; text-align: right !important; font-size: initial"  value="#{eventoManagedBean.evento.valor}">
+                                        <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                    </h:outputText>
+
+                                    <h:outputLabel value="Valor Recebido" for="recebido1" style="width: 180px; font-weight: bold; color: blue; font-size: initial" />
+                                    <h:outputText id="recebido1" style="width: 300px; text-align: right !important; font-size: initial"  value="#{eventoManagedBean.valorRecebidoEvento}">
+                                        <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                    </h:outputText>
+
+                                </h:panelGrid>                                    
+                            </p:fieldset>                                
+
+                            <p:fieldset>
+                                <h:panelGrid columns="2" id="observacao" >
+                                    <h:outputLabel value="Observação:" for="observacao"  style="font-weight: bold; color: black; font-size: initial"/>
+                                    <h:outputText id="descricao" value="#{eventoManagedBean.evento.observacao}" 
+                                                  style="min-width: 700px; max-width: 483px; margin-left: 30px; width: 100% !important;
+                                                  background-color: #FFFFFF; text-align: left; font-size: initial "/> 
+                                </h:panelGrid>
+                            </p:fieldset> 
+                        </p:tab>
+                        <p:tab title="Pagamentos">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <h:outputText value="Não existem Pagamentos cadastrados" rendered="#{empty eventoManagedBean.lancamentos}" />
+
+                                <p:dataTable id="lancamento" value="#{eventoManagedBean.lancamentos}" var="lancamento" rendered="#{not empty eventoManagedBean.lancamentos}"
+                                             filteredValue="#{eventoManagedBean.lancamentoFiltro}" scrollHeight="270" scrollable="true" >
+                                    <p:column sortBy="#{lancamento.datalancamento}" filterBy="#{lancamento.datalancamento}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Cadastro" />
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.datalancamento}">
+                                            <f:convertDateTime type="date" dateStyle="medium"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column sortBy="#{lancamento.dataprevisao}" filterBy="#{lancamento.dataprevisao}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Previsão"/>
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.dataprevisao}">
+                                            <f:convertDateTime type="date" dateStyle="medium"/>
+                                        </h:outputText>
+                                    </p:column>      
+
+                                    <p:column sortBy="#{lancamento.datarecebimento}" filterBy="#{lancamento.datarecebimento}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Recebimento"/>
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.datarecebimento}">
+                                            <f:convertDateTime type="date" dateStyle="medium"/>
+                                        </h:outputText>
+                                    </p:column> 
+
+                                    <p:column sortBy="#{lancamento.valorprevisto}" filterBy="#{lancamento.valorprevisto}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Valor Previsto"/>
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.valorprevisto}">
+                                            <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column sortBy="#{lancamento.valorrecebido}" filterBy="#{lancamento.valorrecebido}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Valor Recebido"/>
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.valorrecebido}">
+                                            <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column sortBy="#{lancamento.usuariolancamento.nomeusuario}" filterBy="#{lancamento.usuariolancamento.nomeusuario}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Lançado por"/>
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.usuariolancamento.nomeusuario}" />
+                                    </p:column>
+
+                                    <p:column sortBy="#{lancamento.usuariorecebimento.nomeusuario}" filterBy="#{lancamento.usuariorecebimento.nomeusuario}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Recebido por"/>
+                                        </f:facet>
+                                        <h:outputText value="#{lancamento.usuariorecebimento.nomeusuario}" />
+                                    </p:column>
+
+                                    <p:column exportable="false">
+                                        <f:facet name="header">
+                                            <h:outputText value=""/>
+                                        </f:facet>
+                                        <h:commandButton styleClass="btn btn-info btn-small" rendered="#{lancamento.datarecebimento == null}" action="#{eventoManagedBean.montarPaginaParaConfirmarRecebimento}" value="Confirmar">
+                                            <f:setPropertyActionListener value="#{lancamento}" target="#{eventoManagedBean.lancamento}" />  
+                                        </h:commandButton>                                
+                                        <h:outputText value=" " ></h:outputText>                                                                    
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Colaboradores">
+
+                            <h:outputText value="Não existem Colaboradores cadastrados para esse Evento" rendered="#{empty eventoManagedBean.colaboradoresAdd}" />
+
+                            <p:dataTable id="colaborador" value="#{eventoManagedBean.colaboradoresAdd}" var="colaborador" rendered="#{not empty eventoManagedBean.colaboradoresAdd}"
+                                         filteredValue="#{eventoManagedBean.colaboradorFiltroAdd}" scrollHeight="270" scrollable="true" >
+                                <p:column sortBy="#{colaborador.nome}" filterBy="#{colaborador.nome}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome do Colaborador" />
+                                    </f:facet>
+                                    <h:outputText value="#{colaborador.nome}"/>
+                                </p:column>
+                                <p:column sortBy="#{colaborador.tipo.descricao}" filterBy="#{colaborador.tipo.descricao}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{colaborador.tipo.descricao}" />
+                                </p:column>      
+                                <p:column sortBy="#{colaborador.status}" filterBy="#{colaborador.status}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Status Colaborador"/>
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
+                                </p:column> 
+
+                                <p:column exportable="false">
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.removeColaboradorEvento}" value="Remover">
+                                        <f:setPropertyActionListener value="#{colaborador}" target="#{eventoManagedBean.colaborador}" />  
+                                    </h:commandButton>                                  
+                                </p:column>
+                            </p:dataTable>
+
+                            <div id="footerForm" class="title ui-widget-header ui-corner-all"  >
+                                <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddColaborador}" action="#{eventoManagedBean.popularColaborador}" value="Adicionar Colaborador" id="confirmar"/>
+                            </div>
+
+                            <div >
+                                <h:panelGrid columns="2" cellpadding="10" rendered="#{eventoManagedBean.isAddColaborador}">
+                                    <h:outputText value="Não existem Colaboradores cadastrados" rendered="#{empty eventoManagedBean.colaboradores}" />
+
+                                    <p:dataTable id="colaboradorAdd" value="#{eventoManagedBean.colaboradores}" var="colaborador" rendered="#{not empty eventoManagedBean.colaboradores}"
+                                                 filteredValue="#{eventoManagedBean.colaboradorFiltro}" scrollHeight="270" scrollable="true" >
+                                        <p:column sortBy="#{colaborador.nome}" filterBy="#{colaborador.nome}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Nome do Colaborador" />
+                                            </f:facet>
+                                            <h:outputText value="#{colaborador.nome}"/>
+                                        </p:column>
+                                        <p:column sortBy="#{colaborador.tipo.descricao}" filterBy="#{colaborador.tipo.descricao}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Tipo"/>
+                                            </f:facet>
+                                            <h:outputText value="#{colaborador.tipo.descricao}" />
+                                        </p:column>      
+                                        <p:column sortBy="#{colaborador.status}" filterBy="#{colaborador.status}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Status Colaborador"/>
+                                            </f:facet>
+                                            <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
+                                        </p:column> 
+
+                                        <p:column exportable="false">
+                                            <f:facet name="header">
+                                                <h:outputText value=""/>
+                                            </f:facet>
+                                            <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.addColaboradorEvento}" value="Adicionar">
+                                                <f:setPropertyActionListener value="#{colaborador}" target="#{eventoManagedBean.colaborador}" />  
+                                            </h:commandButton>                                  
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+
+                                <div id="salvarForm" class="title ui-widget-header ui-corner-all"  >
+                                    <h:commandButton  styleClass="btn btn-success" rendered="#{eventoManagedBean.isAddColaborador}" action="#{eventoManagedBean.SalvarColaboradorEvento}" value="Salvar" id="salvar"/>
+                                </div>
+                            </div>
+                        </p:tab>
+
+
+                        <p:tab title="Terceiros">
+
+                            <h:outputText value="Não existem Terceiros cadastrados para esse Evento" rendered="#{empty eventoManagedBean.terceiroFiltroAdd}" />
+
+                            <p:dataTable id="terceiro" value="#{eventoManagedBean.terceiroFiltroAdd}" var="terceiro" rendered="#{not empty eventoManagedBean.terceiroFiltroAdd}"
+                                         filteredValue="#{eventoManagedBean.terceiroFiltroAdd}" scrollHeight="270" scrollable="true" >
+                                <p:column sortBy="#{terceiro.nome}" filterBy="#{terceiro.nome}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nome do Terceiro" />
+                                    </f:facet>
+                                    <h:outputText value="#{terceiro.nome}"/>
+                                </p:column>
+                                <p:column sortBy="#{terceiro.tipo.descricao}" filterBy="#{terceiro.tipo.descricao}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{terceiro.tipo.descricao}" />
+                                </p:column>      
+                                <p:column sortBy="#{terceiro.status}" filterBy="#{terceiro.status}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Status Terceiro"/>
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{terceiro.status}" disabled="true"/>
+                                </p:column> 
+
+                                <p:column exportable="false">
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.removeTerceiroEvento}" value="Remover">
+                                        <f:setPropertyActionListener value="#{terceiro}" target="#{eventoManagedBean.terceiro}" />  
+                                    </h:commandButton>                                  
+                                </p:column>
+                            </p:dataTable>
+
+                            <div id="footerForm" class="title ui-widget-header ui-corner-all"  >
+                                <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddTerceiro}" action="#{eventoManagedBean.popularTerceiro}" value="Adicionar Terceiro" id="confirmarTerceiro"/>
+                            </div>
+
+                            <div >
+                                <h:panelGrid columns="2" cellpadding="10" rendered="#{eventoManagedBean.isAddTerceiro}">
+                                    <h:outputText value="Não existem Terceiros cadastrados" rendered="#{empty eventoManagedBean.terceiros}" />
+
+                                    <p:dataTable id="terceiroAdd" value="#{eventoManagedBean.colaboradores}" var="terceiro" rendered="#{not empty eventoManagedBean.terceiros}"
+                                                 filteredValue="#{eventoManagedBean.terceiroFiltro}" scrollHeight="270" scrollable="true" >
+                                        <p:column sortBy="#{terceiro.nome}" filterBy="#{terceiro.nome}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Nome do Terceiro" />
+                                            </f:facet>
+                                            <h:outputText value="#{terceiro.nome}"/>
+                                        </p:column>
+                                        <p:column sortBy="#{terceiro.tipo.descricao}" filterBy="#{terceiro.tipo.descricao}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Tipo"/>
+                                            </f:facet>
+                                            <h:outputText value="#{terceiro.tipo.descricao}" />
+                                        </p:column>      
+                                        <p:column sortBy="#{terceiro.status}" filterBy="#{terceiro.status}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Status Terceiro"/>
+                                            </f:facet>
+                                            <p:selectBooleanCheckbox value="#{terceiro.status}" disabled="true"/>
+                                        </p:column> 
+
+                                        <p:column exportable="false">
+                                            <f:facet name="header">
+                                                <h:outputText value=""/>
+                                            </f:facet>
+                                            <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.addTerceitoEvento}" value="Adicionar">
+                                                <f:setPropertyActionListener value="#{terceiro}" target="#{eventoManagedBean.terceiro}" />  
+                                            </h:commandButton>                                  
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+
+                                <div id="salvarFormTerceiro" class="title ui-widget-header ui-corner-all"  >
+                                    <h:commandButton  styleClass="btn btn-success" rendered="#{eventoManagedBean.isAddTerceiro}" action="#{eventoManagedBean.SalvarTerceiroEvento}" value="Salvar" id="salvarTerceiro"/>
+                                </div>
+                            </div>
+
+                        </p:tab>
+
+                        <p:tab title="Decoração">
+
+                            <h:outputText value="Não existem Itens de Decoração cadastrados para esse Evento" rendered="#{empty eventoManagedBean.itensAdd}" />
+
+                            <p:dataTable id="decoracao" value="#{eventoManagedBean.itensAdd}" var="item" rendered="#{not empty eventoManagedBean.itensAdd}"
+                                         filteredValue="#{eventoManagedBean.itensFiltroADD}" scrollHeight="270" scrollable="true" >
+                                <p:column sortBy="#{item.descricao}" filterBy="#{item.descricao}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Descrição do Item" />
+                                    </f:facet>
+                                    <h:outputText value="#{item.descricao}"/>
+                                </p:column>
+                                <p:column sortBy="#{item.cor}" filterBy="#{item.cor}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Cor"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.cor}" />
+                                </p:column>      
+                                <p:column sortBy="#{item.status}" filterBy="#{item.status}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Status Item"/>
+                                    </f:facet>
+                                    <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
+                                </p:column> 
+
+                                <p:column exportable="false">
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.removeItemEvento}" value="Remover">
+                                        <f:setPropertyActionListener value="#{item}" target="#{eventoManagedBean.item}" />  
+                                    </h:commandButton>                                  
+                                </p:column>
+                            </p:dataTable>
+
+                            <div id="FooterDecoracao" class="title ui-widget-header ui-corner-all"  >
+                                <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddDecoracao}" action="#{eventoManagedBean.popularDecoracao}" value="Adicionar Item" id="confirmarItem"/>
+                            </div>
+
+                            <div >
+                                <h:panelGrid columns="2" cellpadding="10" rendered="#{eventoManagedBean.isAddDecoracao}">
+                                    <h:outputText value="Não existem Itens cadastrados" rendered="#{empty eventoManagedBean.itens}" />
+
+                                    <p:dataTable id="decoracaoAdd" value="#{eventoManagedBean.itens}" var="item" rendered="#{not empty eventoManagedBean.itens}"
+                                                 filteredValue="#{eventoManagedBean.itensFiltro}" scrollHeight="270" scrollable="true" >
+                                        <p:column sortBy="#{item.descricao}" filterBy="#{item.descricao}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Descrição do Item" />
+                                            </f:facet>
+                                            <h:outputText value="#{item.descricao}"/>
+                                        </p:column>
+                                        <p:column sortBy="#{item.cor}" filterBy="#{item.cor}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Cor"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.cor}" />
+                                        </p:column>      
+                                        <p:column sortBy="#{item.status}" filterBy="#{item.status}">
+                                            <f:facet name="header">
+                                                <h:outputText value="Status Item"/>
+                                            </f:facet>
+                                            <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
+                                        </p:column> 
+
+                                        <p:column exportable="false">
+                                            <f:facet name="header">
+                                                <h:outputText value=""/>
+                                            </f:facet>
+                                            <h:commandButton styleClass="btn btn-sucess btn-small" action="#{eventoManagedBean.addItemEvento}" value="Adicionar">
+                                                <f:setPropertyActionListener value="#{item}" target="#{eventoManagedBean.item}" />  
+                                            </h:commandButton>                                  
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+
+                                <div id="salvarItemForm" class="title ui-widget-header ui-corner-all"  >
+                                    <h:commandButton  styleClass="btn btn-success" rendered="#{eventoManagedBean.isAddDecoracao}" action="#{eventoManagedBean.SalvarDecoracao}" value="Salvar" id="salvarItem"/>
+                                </div>
+                            </div>
+
+                        </p:tab>
+                    </p:tabView>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Listar Usuários</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Usuários Cadastrados</h4>
+
+                    <h:panelGrid class="tamanho995">
+                        <div>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="left">
+                                    <h:commandLink styleClass="btn btn-success btn-small" action="#{usuarioManagedBean.montarPaginaParaInsercao}" value="Adicionar Usuários" />
+                                </p:toolbarGroup>  
+
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="usuario" preProcessor="#{usuarioManagedBean.imprimePDF}" fileName="usuarios" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="usuario" fileName="usuarios" preProcessor="#{usuarioManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+
+                        <h:outputText value="Não existem Usuários cadastradss" rendered="#{empty usuarioManagedBean.usuarios}" />
+
+                        <p:dataTable id="usuario" value="#{usuarioManagedBean.usuarios}" var="usuario" rendered="#{not empty usuarioManagedBean.usuarios}"
+                                     filteredValue="#{usuarioManagedBean.usuarioFiltro}" scrollHeight="270" scrollable="true" >
+                            <p:column sortBy="#{usuario.nomeusuario}" filterBy="#{usuario.nomeusuario}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nome do Usuario" />
+                                </f:facet>
+                                <h:outputText value="#{usuario.nomeusuario}" />
+                            </p:column>
+                            <p:column sortBy="#{usuario.usuario}" filterBy="#{usuario.usuario}">
+                                <f:facet name="header">
+                                    <h:outputText value="Usuario"/>
+                                </f:facet>
+                                <h:outputText value="#{usuario.usuario}" />
+                            </p:column>                               
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{usuarioManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{usuario}" target="#{usuarioManagedBean.usuario}" />  
+                                </h:commandButton>                                                                   
+                            </p:column>
+                        </p:dataTable>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html> 

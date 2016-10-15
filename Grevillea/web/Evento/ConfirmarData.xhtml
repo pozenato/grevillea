@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Confirmar Data</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Informe a Data do Evento</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true" /> 
+                    <h:panelGrid columns="2" class="tamanho995" style="min-width:600px;min-height:620px;">
+                        
+                        <p:outputLabel value=" " style="min-height: 100px;"/>
+                        <p:calendar id="dataevento" value="#{eventoManagedBean.evento.iddata}" pattern="dd/MM/yyyy" mask="true" style="margin-bottom: 100px;"
+                                    required="true" pages="1"  requiredMessage="É obrigatório informar a Data do Evento. For favor, selecione uma data!"/>
+                        <p:outputLabel value=" " style="min-height: 200px;"/>
+
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{eventoManagedBean.montarPaginaParaCadastro}" value="Avançar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{eventoManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

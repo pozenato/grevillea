@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Cadastrar Pagamento para Evento</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Pagamento</h4>
+                <h:form>
+                    <p:messages id="messages" autoUpdate="true" closable="true" /> 
+                    <h:panelGrid columns="3" > 
+
+                        <h:outputLabel value="Previsão de Recebimento " for="previsao"/>
+                        <p:calendar id="previsao" label="Previsão" value="#{eventoManagedBean.lancamento.dataprevisao}" pattern="dd/MM/yyyy" mask="true" style="margin-bottom: 100px;"
+                                    required="true" requiredMessage="É obrigatório informar a Data de previsão de recebimento do Pagamento!"/>
+                        <p:message for="previsao"/>            
+
+                        <h:outputLabel value="Valor do Pagamento " for="valor"/>
+                        <p:inputText id="valor" value="#{eventoManagedBean.lancamento.valorprevisto}" required="true"
+                                     requiredMessage="Preenchimento Obrigatório" style="width: 208px;">
+                            <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                            <p:ajax update="valor" process="valor" event="change" />
+                        </p:inputText>
+
+                        <p:message for="valor"/>
+
+                        <h:outputLabel value="Confirmar Pagamento: " />
+                        <p:selectBooleanCheckbox value="#{eventoManagedBean.confirmaPagamento}" />
+
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{eventoManagedBean.InserirPagamento}" value="Avançar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{eventoManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

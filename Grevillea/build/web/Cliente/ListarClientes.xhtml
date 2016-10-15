@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Listar Clientes</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Clientes Cadastrados</h4>
+
+                    <h:panelGrid class="tamanho995">
+                        <div>
+                            <p:toolbar>  
+                                <p:toolbarGroup align="left">
+                                    <h:commandLink styleClass="btn btn-success btn-small" action="#{clienteManagedBean.montarPaginaParaInsercao}" value="Adicionar Clientes" />
+                                </p:toolbarGroup>  
+
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="cliente" preProcessor="#{clienteManagedBean.imprimePDF}" fileName="clientes" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="cliente" fileName="clientes" preProcessor="#{clienteManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+
+                        <h:outputText value="Não existem Clientes cadastradss" rendered="#{empty clienteManagedBean.clientes}" />
+
+                        <p:dataTable id="cliente" value="#{clienteManagedBean.clientes}" var="cliente" rendered="#{not empty clienteManagedBean.clientes}"
+                                     filteredValue="#{clienteManagedBean.clienteFiltro}" scrollHeight="270" scrollable="true" >
+                            <p:column sortBy="#{cliente.nome}" filterBy="#{cliente.nome}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nome do Cliente" />
+                                </f:facet>
+                                <h:outputText value="#{cliente.nome}" />
+                            </p:column>
+                            <p:column sortBy="#{cliente.email}" filterBy="#{cliente.email}">
+                                <f:facet name="header">
+                                    <h:outputText value="E-mail"/>
+                                </f:facet>
+                                <h:outputText value="#{cliente.email}" />
+                            </p:column>      
+                            <p:column sortBy="#{cliente.telefone}" filterBy="#{cliente.telefone}">
+                                <f:facet name="header">
+                                    <h:outputText value="Telefone"/>
+                                </f:facet>
+                                <h:outputText value="#{cliente.telefone}" />
+                            </p:column> 
+                            
+                        </p:dataTable>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html> 

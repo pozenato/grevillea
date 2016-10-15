@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Listar Recebimentos</ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Recebimentos</h4>
+
+                    <h:panelGrid columns="10">
+                        <div class="despesa">
+                            <p:outputLabel value="Data do Recebimento" for="dataInit" style="width: 132px"/>
+                            <p:calendar id="dataInit" value="#{eventoManagedBean.dataInit}" pattern="dd/MM/yyyy" mask="true"
+                                        required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
+                            <p:message for="dataInit"/>  
+                        </div>
+                        <div class="despesa">
+                            <p:outputLabel value="Data do Recebimento" for="dataFim" style="width: 132px"/>
+                            <p:calendar id="dataFim" value="#{eventoManagedBean.dataFim}" pattern="dd/MM/yyyy" mask="true"
+                                        required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
+                            <p:message for="dataFim"/>  
+                        </div>
+                        <div class="despesa">
+                            <h:commandButton style="margin-bottom: 10px; " styleClass="btn btn-success" action="#{eventoManagedBean.ListarRecebimentoPorData}"
+                                             value="Consultar Recebimento" id="consultar"/>
+                        </div>
+                    </h:panelGrid>
+
+                    <h:panelGrid class="tamanho995" rendered="#{not empty eventoManagedBean.recebimentos}">
+                        <div>
+                            <p:toolbar>                                  
+                                <p:toolbarGroup align="right">
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar PDF">  
+                                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="recebimento" preProcessor="#{eventoManagedBean.imprimeRecebimentoPDF}" fileName="recebimentos" />
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-info btn-small" value="Exportar Excel ">  
+                                        <p:dataExporter type="xls" encoding="iso-8859-1" target="recebimento" fileName="recebimentos" preProcessor="#{eventoManagedBean.imprimeXLS}"/>
+                                    </h:commandLink>
+                                    <p:separator />
+                                    <h:commandLink styleClass="btn btn-small" action="/homeAdmin" value="Voltar" />
+                                </p:toolbarGroup>  
+
+                            </p:toolbar> 
+                        </div>
+
+                        <h:outputText value="Não existem Recebimentos Lançados no Periodo Pesquisado" rendered="#{empty eventoManagedBean.recebimentos}" />
+
+                        <p:dataTable id="recebimento" value="#{eventoManagedBean.recebimentos}" var="recebimento" rendered="#{not empty eventoManagedBean.recebimentos}"
+                                     filteredValue="#{eventoManagedBean.recebimentos}" scrollHeight="170" scrollable="true" >
+                            <p:column sortBy="#{recebimento.evento.idevento}" filterBy="#{recebimento.evento.idevento}">
+                                <f:facet name="header">
+                                    <h:outputText value="N° do Evento"/>
+                                </f:facet>
+                                <h:outputText value="#{recebimento.evento.idevento}" />
+                            </p:column>   
+                            <p:column sortBy="#{recebimento.datarecebimento}" filterBy="#{recebimento.datarecebimento}">
+                                <f:facet name="header">
+                                    <h:outputText value="Data do Recebimento" />
+                                </f:facet>
+                                <h:outputText value="#{recebimento.datarecebimento}">
+                                    <f:convertDateTime type="date" dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column sortBy="#{recebimento.evento.cliente.nome}" filterBy="#{recebimento.evento.cliente.nome}">
+                                <f:facet name="header">
+                                    <h:outputText value="Cliente"/>
+                                </f:facet>
+                                <h:outputText value="#{recebimento.evento.cliente.nome}" />
+                            </p:column>      
+                            <p:column sortBy="#{recebimento.evento.tipo.nometipo}" filterBy="#{recebimento.evento.tipo.nometipo}">
+                                <f:facet name="header">
+                                    <h:outputText value="Tipo Evento"/>
+                                </f:facet>
+                                <h:outputText value="#{recebimento.evento.tipo.nometipo}" />
+                            </p:column> 
+                            <p:column sortBy="#{recebimento.usuariorecebimento.nomeusuario}" filterBy="#{recebimento.usuariorecebimento.nomeusuario}">
+                                <f:facet name="header">
+                                    <h:outputText value="Usuário Receb."/>
+                                </f:facet>
+                                <h:outputText value="#{recebimento.usuariorecebimento.nomeusuario}" />
+                            </p:column> 
+                            <p:column sortBy="#{recebimento.valorrecebido}" filterBy="#{recebimento.valorrecebido}">
+                                <f:facet name="header">
+                                    <h:outputText value="Valor"/>
+                                </f:facet>
+                                <h:outputText value="#{recebimento.valorrecebido}">
+                                    <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                </h:outputText>
+                            </p:column> 
+                        </p:dataTable>
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="4" class="despesa" rendered="#{not empty eventoManagedBean.recebimentos}">
+
+                        <h:outputLabel value="Quantidade de Recebimentos: " for="qtdade" class="resultado-recebimento"/>
+                        <p:inputText id="qtdade" value="#{eventoManagedBean.totalLancamento}" readonly="true" style="width: 208px;"/>
+
+                        <h:outputLabel value="Total Recebido: " for="total" class="resultado-recebimento"/>
+                        <p:inputText id="total" value="#{eventoManagedBean.valorTotalRecebimento}" readonly="true" style="width: 208px;">
+                            <f:convertNumber pattern="#,##0.00"></f:convertNumber>                       
+                        </p:inputText>
+
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html> 

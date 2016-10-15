@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"   
+      xmlns:f="http://java.sun.com/jsf/core">  
+
+    <body>
+
+        <ui:composition template="./../homeAdmin.xhtml">
+
+            <ui:define name="title">Inserir Cliente</ui:define>
+
+            <ui:define name="content">
+
+                <h4 class="title ui-widget-header ui-corner-all">Cadastrar Clientes</h4>
+                <h:form>
+                    <h:panelGrid columns="3" class="tamanho995">
+
+                        <h:panelGrid columns="3"  cellpadding="5" >
+                            <h:outputLabel value="Nome: " for="nome"/>
+                            <p:inputText id="nome" value="#{eventoManagedBean.clienteRecuperado.nome}" required="true"
+                                         requiredMessage="Preenchimento Obrigatório" style="width: 600px;"/>
+                            <p:message for="nome"/>
+
+                            <h:outputLabel value="E-mail: " for="email"/>
+                            <p:inputText id="email" value="#{eventoManagedBean.clienteRecuperado.email}"  style="width: 600px;">
+                                <f:validator validatorId="validateEmail"/>
+                            </p:inputText>
+                            <p:message for="email"/>
+
+                            <h:outputLabel value="Telefone: " for="telefone"/>
+                            <p:inputMask id="telefone" value="#{eventoManagedBean.clienteRecuperado.telefone}" 
+                                         requiredMessage="Preenchimento Obrigatório" required="true" mask="(999) 99999-9999" style="margin-right: 395px;"/>
+                            <p:message for="telefone"/>
+
+                            <h:outputLabel value="Sexo: " for="sexo"/>
+                            <p:selectOneRadio  value="#{eventoManagedBean.clienteRecuperado.sexo}" layout="grid" columns="2" style="width: 200px"
+                                               required="true" requiredMessage="Preenchimento Obrigatório">
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel=" Feminino" itemValue="F" />
+                            </p:selectOneRadio >
+                            <p:message for="telefone"/>
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{eventoManagedBean.confirmarCadastroCliente}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{eventoManagedBean.montarPaginaParaCadastro}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                    </div>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
