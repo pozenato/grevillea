@@ -40,5 +40,9 @@ public class LancamentoFachada {
     public List<Lancamento> ListarRecebimentoPorData(Date dataInit, Date dateFim) {
         return this.lancamentoDAO.ListarPagamentoPorData(dataInit, dateFim);
     }
+
+    public List<Lancamento> ListarRecebimentoPrevistoPorData(Date dataInit, Date dataFim) {
+        return this.lancamentoDAO.ListarPagamentoPrevistoPorData(dataInit, dataFim);
+    }
     
 }

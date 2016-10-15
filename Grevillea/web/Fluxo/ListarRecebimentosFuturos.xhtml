@@ -11,12 +11,12 @@
 
         <ui:composition template="./../homeAdmin.xhtml">
 
-            <ui:define name="title">Listar Recebimentos</ui:define>
+            <ui:define name="title">Listar Recebimentos Futuros</ui:define>
 
             <ui:define name="content">
                 <h:form>
 
-                    <h4 class="title ui-widget-header ui-corner-all">Lista de Recebimentos</h4>
+                    <h4 class="title ui-widget-header ui-corner-all">Lista de Recebimentos Futuros</h4>
 
                     <h:panelGrid columns="10">
                         <div class="despesa">
@@ -32,7 +32,7 @@
                             <p:message for="dataFim"/>  
                         </div>
                         <div class="despesa">
-                            <h:commandButton style="margin-bottom: 10px; " styleClass="btn btn-success" action="#{eventoManagedBean.ListarRecebimentoPorData}"
+                            <h:commandButton style="margin-bottom: 10px; " styleClass="btn btn-success" action="#{eventoManagedBean.ListarRecebimentoPrevistoPorData}"
                                              value="Consultar Recebimento" id="consultar"/>
                         </div>
                     </h:panelGrid>
@@ -55,7 +55,7 @@
                             </p:toolbar> 
                         </div>
 
-                        <h:outputText value="Não existem Recebimentos Lançados no Periodo Pesquisado" rendered="#{empty eventoManagedBean.recebimentos}" />
+                        <h:outputText value="Não existem Recebimentos Previsto para Periodo Pesquisado" rendered="#{empty eventoManagedBean.recebimentos}" />
 
                         <p:dataTable id="recebimento" value="#{eventoManagedBean.recebimentos}" var="recebimento" rendered="#{not empty eventoManagedBean.recebimentos}"
                                      filteredValue="#{eventoManagedBean.recebimentos}" scrollHeight="170" scrollable="true" >
@@ -65,11 +65,11 @@
                                 </f:facet>
                                 <h:outputText value="#{recebimento.evento.idevento}" />
                             </p:column>   
-                            <p:column sortBy="#{recebimento.datarecebimento}" filterBy="#{recebimento.datarecebimento}">
+                            <p:column sortBy="#{recebimento.dataprevisao}" filterBy="#{recebimento.dataprevisao}">
                                 <f:facet name="header">
-                                    <h:outputText value="Data do Recebimento" />
+                                    <h:outputText value="Data da Previsão" />
                                 </f:facet>
-                                <h:outputText value="#{recebimento.datarecebimento}">
+                                <h:outputText value="#{recebimento.dataprevisao}">
                                     <f:convertDateTime type="date" dateStyle="medium"/>
                                 </h:outputText>
                             </p:column>
@@ -85,17 +85,17 @@
                                 </f:facet>
                                 <h:outputText value="#{recebimento.evento.tipo.nometipo}" />
                             </p:column> 
-                            <p:column sortBy="#{recebimento.usuariorecebimento.nomeusuario}" filterBy="#{recebimento.usuariorecebimento.nomeusuario}">
+                            <p:column sortBy="#{recebimento.usuariolancamento.nomeusuario}" filterBy="#{recebimento.usuariolancamento.nomeusuario}">
                                 <f:facet name="header">
-                                    <h:outputText value="Usuário Receb."/>
+                                    <h:outputText value="Usuário Cadastro"/>
                                 </f:facet>
-                                <h:outputText value="#{recebimento.usuariorecebimento.nomeusuario}" />
+                                <h:outputText value="#{recebimento.usuariolancamento.nomeusuario}" />
                             </p:column> 
-                            <p:column sortBy="#{recebimento.valorrecebido}" filterBy="#{recebimento.valorrecebido}">
+                            <p:column sortBy="#{recebimento.valorprevisto}" filterBy="#{recebimento.valorprevisto}">
                                 <f:facet name="header">
                                     <h:outputText value="Valor"/>
                                 </f:facet>
-                                <h:outputText value="#{recebimento.valorrecebido}">
+                                <h:outputText value="#{recebimento.valorprevisto}">
                                     <f:convertNumber pattern="#,##0.00"></f:convertNumber>
                                 </h:outputText>
                             </p:column> 
@@ -105,10 +105,10 @@
 
                     <h:panelGrid columns="4" class="despesa" rendered="#{not empty eventoManagedBean.recebimentos}">
 
-                        <h:outputLabel value="Quantidade de Recebimentos: " for="qtdade" class="resultado-recebimento"/>
+                        <h:outputLabel value="Quantidade Previsto: " for="qtdade" class="resultado-recebimento"/>
                         <p:inputText id="qtdade" value="#{eventoManagedBean.totalLancamento}" readonly="true" style="width: 208px;"/>
 
-                        <h:outputLabel value="Total Recebido: " for="total" class="resultado-recebimento"/>
+                        <h:outputLabel value="Total Previsto " for="total" class="resultado-recebimento"/>
                         <p:inputText id="total" value="#{eventoManagedBean.valorTotalRecebimento}" readonly="true" style="width: 208px;">
                             <f:convertNumber pattern="#,##0.00"></f:convertNumber>                       
                         </p:inputText>

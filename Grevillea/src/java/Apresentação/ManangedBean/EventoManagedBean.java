@@ -444,11 +444,26 @@ public class EventoManagedBean implements java.io.Serializable {
     }
     
     public String montarPaginaParaPesquisarPagamento(){
+        this.recebimentos = new ArrayList<>();        
         return "/Fluxo/ListarRecebimentos?faces-redirect=true";
+    }
+    
+    public String montarPaginaParaPesquisarPagamentoFuturo(){
+        this.recebimentos = new ArrayList<>(); 
+        return "/Fluxo/ListarRecebimentosFuturos?faces-redirect=true";
     }
     
     public void ListarRecebimentoPorData(){
         this.recebimentos = lancamentoFachada.ListarRecebimentoPorData(this.getDataInit(), this.getDataFim());
+        this.qteLancamento = recebimentos.size();
+        valorTotalRecebimento = 0.0;
+        for (Lancamento lanc : recebimentos){
+            valorTotalRecebimento += lanc.getValorrecebido();
+        }
+    }
+    
+     public void ListarRecebimentoPrevistoPorData(){
+        this.recebimentos = lancamentoFachada.ListarRecebimentoPrevistoPorData(this.getDataInit(), this.getDataFim());
         this.qteLancamento = recebimentos.size();
         valorTotalRecebimento = 0.0;
         for (Lancamento lanc : recebimentos){

@@ -30,6 +30,7 @@ import org.primefaces.model.DualListModel;
 public class ColaboradorManagedBean {
 
     private Colaborador colaborador;
+    private Colaborador colaboradorAlteracao = new Colaborador();
     private List<Colaborador> colaboradores;
     private List<Colaborador> colaboradorFiltro;
     private TipoColaborador tipo = new TipoColaborador();
@@ -53,7 +54,7 @@ public class ColaboradorManagedBean {
     }
 
     public String montarPaginaParaAlterar () {
-        colaborador = this.getColaborador();
+        this.setColaboradorAlteracao(colaborador);
         return "/Colaborador/AlterarColaborador?faces-redirect=true";
     }
     
@@ -211,6 +212,20 @@ public class ColaboradorManagedBean {
      */
     public void setIdTipoSelecionado(int idTipoSelecionado) {
         this.idTipoSelecionado = idTipoSelecionado;
+    }
+
+    /**
+     * @return the colaboradorAlteracao
+     */
+    public Colaborador getColaboradorAlteracao() {
+        return colaboradorAlteracao;
+    }
+
+    /**
+     * @param colaboradorAlteracao the colaboradorAlteracao to set
+     */
+    public void setColaboradorAlteracao(Colaborador colaboradorAlteracao) {
+        this.colaboradorAlteracao = colaboradorAlteracao;
     }
 
 }

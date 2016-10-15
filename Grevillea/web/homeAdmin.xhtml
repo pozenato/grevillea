@@ -14,7 +14,6 @@
 
         <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/otimo.css"/>
         <!-- Importação CSS - Pagina Inicial-->  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resource/css/corpo.css"/>
-        <!-- Importação CSS - barra do Governo --> <link rel="stylesheet" href="http://bibliotecaweb.mec.gov.br/barra_do_governo3/css/barra_do_governo.css" />
         <!-- Importação JS Locale --> <script src="#{facesContext.externalContext.requestContextPath}/resource/js/primefaces-locale.js"></script>
 
         <!-- Importação da Biblioteca JQuery --> <script src="#{facesContext.externalContext.requestContextPath}/js/jquery-1.9.1.min.js"></script>
@@ -69,7 +68,8 @@
                             <p:submenu label="Fluxo Caixa" icon="ui-icon-folder-collapsed">
                                 <p:menuitem value="Inserir nova Despesa" icon="ui-icon-calculator" action="#{fluxoManagedBean.montarPaginaParaInsercao}" />
                                 <p:menuitem value="Listar Despesas" icon="ui-icon-calculator" action="#{fluxoManagedBean.montarPaginaParaPesquisarDespesa}" />
-                                <p:menuitem value="Listar Recebimento" icon="ui-icon-calculator" action="#{eventoManagedBean.montarPaginaParaPesquisarPagamento()}" />                                
+                                <p:menuitem value="Listar Recebimento" icon="ui-icon-calculator" action="#{eventoManagedBean.montarPaginaParaPesquisarPagamento()}" />                               
+                                <p:menuitem value="Listar Previstos" icon="ui-icon-calculator" action="#{eventoManagedBean.montarPaginaParaPesquisarPagamentoFuturo()}" />                                
                             </p:submenu>
 
                             <p:submenu label="Consultas" icon="ui-icon-circle-zoomin">

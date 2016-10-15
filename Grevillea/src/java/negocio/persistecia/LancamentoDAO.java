@@ -43,18 +43,29 @@ public class LancamentoDAO {
     } 
      
     public List<Lancamento> ListarPagamentoPorData(Date dataInit, Date dateFim) {
-         try {
+        try {
           Query query = em.createQuery("SELECT l FROM Lancamento l WHERE l.datarecebimento BETWEEN :dataInit AND :dataFim ORDER BY l.datarecebimento");
             query.setParameter("dataInit" , dataInit);
             query.setParameter("dataFim", dateFim);
             return query.getResultList();
         } catch (Exception e) {
-            return null;
+            throw e;
         }
     }
 
     public void ConfirmarPagamento(Lancamento lancamento) {
         em.merge(lancamento);
+    }
+
+    public List<Lancamento> ListarPagamentoPrevistoPorData(Date dataInit, Date dataFim) {
+        try {
+          Query query = em.createQuery("SELECT l FROM Lancamento l WHERE l.dataprevisao BETWEEN :dataInit AND :dataFim AND l.valorrecebido = null ORDER BY l.datarecebimento");
+            query.setParameter("dataInit" , dataInit);
+            query.setParameter("dataFim", dataFim);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 }
