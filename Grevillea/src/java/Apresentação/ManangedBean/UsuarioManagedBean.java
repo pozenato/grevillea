@@ -198,7 +198,6 @@ public class UsuarioManagedBean {
      * @return the Uusuarios
      */
     public List<Usuario> getUsuarios() {
-        this.recuperarUsuarios();
         return Usuarios;
     }
 

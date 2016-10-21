@@ -17,51 +17,69 @@
 
                 <h4 class="title ui-widget-header ui-corner-all">Alterar Clientes</h4>
                 <h:form>
-                    <h:panelGrid columns="3" class="tamanho995">
 
-                        <h:panelGrid columns="3"  cellpadding="5" >
+                    <h:panelGrid columns="3" class="tamanho995">
+                        <h:panelGrid columns="3"  cellpadding="15" >                    
                             <h:outputLabel value="Nome: " for="nome"/>
                             <p:inputText id="nome" value="#{clienteManagedBean.cliente.nome}" required="true"
-                                         requiredMessage="Preenchimento Obrigatório" readonly="true" style="width: 600px;"/>
-                            <p:message for="nome"/>
+                                         requiredMessage="Preenchimento Obrigatório" readonly="true" style="width: 600px; margin-left: 30px"/>
+                            <p:message for="nome"/>                 
 
                             <h:outputLabel value="E-mail: " for="email"/>
-                            <p:inputText id="email" value="#{clienteManagedBean.cliente.email}" readonly="true" style="width: 600px;">
+                            <p:inputText id="email" value="#{clienteManagedBean.cliente.email}" readonly="true" style="width: 600px; margin-left: 30px">
                                 <f:validator validatorId="validateEmail"/>
                             </p:inputText>
                             <p:message for="email"/>
 
-                            <h:outputLabel value="Telefone: " for="telefone"/>
-                            <p:inputMask id="telefone" value="#{clienteManagedBean.cliente.telefone}" 
-                                         requiredMessage="Preenchimento Obrigatório" required="true" mask="(999) 99999-9999" style="width: 600px;"/>
-                            <p:message for="telefone"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="6" class="tamanho995">
+                        <h:panelGrid columns="6"  cellpadding="15" >
                             
                             <h:outputLabel value="Sexo: " for="sexo"/>
-                            <p:inputText id="sexo" value="#{clienteManagedBean.cliente.sexo == 'F' ? 'Feminino' : 'Masculino'}" readonly="true" style="width: 600px;"/>
+                            <p:inputText id="sexo" value="#{clienteManagedBean.cliente.sexo == 'F' ? 'Feminino' : 'Masculino'}" readonly="true" style="width: 225px; margin-left: 38px"/>
                             <p:message for="sexo"/>
-                            
+
+                            <h:outputLabel value="Telefone: " for="telefone" style="margin-left: 35px"/>
+                            <p:inputMask id="telefone" value="#{clienteManagedBean.cliente.telefone}" 
+                                         requiredMessage="Preenchimento Obrigatório" required="true" mask="(999) 99999-9999" style="width: 225px; margin-left: 30px"/>
+                            <p:message for="telefone"/>
+
                             <h:outputLabel value="CPF: " for="cpf"/>
-                            <p:inputMask id="cpf" value="#{clienteManagedBean.cliente.cpf}" mask="999.999.999-99" style="width: 600px;"/>
+                            <p:inputMask id="cpf" value="#{clienteManagedBean.cliente.cpf}" mask="999.999.999-99" style="width: 225px; margin-left: 38px"/>
                             <p:message for="cpf"/>
-                            
-                            <h:outputLabel value="R.G.: " for="rg"/>
-                            <p:inputMask id="rg" value="#{clienteManagedBean.cliente.rg}" mask="99.999.999-9" style="width: 600px;"/>
+
+                            <h:outputLabel value="R.G.: " for="rg" style="margin-left: 35px"/>
+                            <p:inputMask id="rg" value="#{clienteManagedBean.cliente.rg}" mask="99.999.999-9" style="width: 225px; margin-left: 30px"/>
                             <p:message for="rg"/>
-                            
+
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="3" class="tamanho995">
+                        <h:panelGrid columns="3"  cellpadding="15" > 
+
                             <h:outputLabel value="Endereço: " for="endereco"/>
-                            <p:inputText id="endereco" value="#{clienteManagedBean.cliente.endereco}" style="width: 600px;"/>
+                            <p:inputText id="endereco" value="#{clienteManagedBean.cliente.endereco}" style="width: 600px; margin-left: 5px"/>
                             <p:message for="endereco"/>
-                            
+
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="6" class="tamanho995">
+                        <h:panelGrid columns="6"  cellpadding="15" > 
+
                             <h:outputLabel value="Cidade: " for="cidade"/>
-                            <p:inputText id="cidade" value="#{clienteManagedBean.cliente.cidade}" style="width: 600px;"/>
+                            <p:inputText id="cidade" value="#{clienteManagedBean.cliente.cidade}" style="width: 225px; margin-left: 24px"/>
                             <p:message for="cidade"/>
-                            
-                            <h:outputLabel value="CEP: " for="cep"/>
+
+                            <h:outputLabel value="CEP: " for="cep" style="margin-left: 35px"/>
                             <p:inputMask id="cep" value="#{clienteManagedBean.cliente.cep}" 
-                                         requiredMessage="Preenchimento Obrigatório" required="true" mask="99.999-999" style="width: 600px;"/>
+                                         requiredMessage="Preenchimento Obrigatório" required="true" mask="99.999-999" style="width: 225px; margin-left: 65px"/>
                             <p:message for="cep"/>
 
-                            
+
                         </h:panelGrid>
 
                     </h:panelGrid>

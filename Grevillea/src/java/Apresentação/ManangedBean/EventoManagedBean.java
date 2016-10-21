@@ -199,6 +199,7 @@ public class EventoManagedBean implements java.io.Serializable {
 
     public String montarPaginaParaInsercao() {
         this.setEvento(new Evento());
+        this.tipo = new Tipo();
         return "/Evento/ConfirmarData?faces-redirect=true";
     }
 
