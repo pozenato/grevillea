@@ -44,5 +44,9 @@ public class LancamentoFachada {
     public List<Lancamento> ListarRecebimentoPrevistoPorData(Date dataInit, Date dataFim) {
         return this.lancamentoDAO.ListarPagamentoPrevistoPorData(dataInit, dataFim);
     }
+
+    public void ExcluirPorEvento(Evento evento) {
+        this.lancamentoDAO.removerLancamentoDoEvento(evento);
+    }
     
 }

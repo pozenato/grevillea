@@ -58,4 +58,8 @@ public class ColaboradorFachada {
     public void setEventoColaboradorDAO(EventoColaboradorDAO eventoColaboradorDAO) {
         this.eventoColaboradorDAO = eventoColaboradorDAO;
     }
+
+    public void ExcluirPorEvento(Evento evento) {
+        this.getEventoColaboradorDAO().removerColaboradoresDoEvento(evento);
+    }
 }

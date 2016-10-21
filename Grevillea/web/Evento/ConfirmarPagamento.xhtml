@@ -21,7 +21,7 @@
                     <h:panelGrid columns="3" > 
 
                         <h:outputLabel value="Valor Recebido " for="valor"/>
-                        <p:inputText id="valor" value="#{eventoManagedBean.lancamento.valorprevisto}" required="true"
+                        <p:inputText id="valor" value="#{eventoManagedBean.lancamento.valorrecebido}" required="true"
                                      requiredMessage="Preenchimento Obrigatório" style="width: 208px;">
                             <f:convertNumber pattern="#,##0.00"></f:convertNumber>
                             <p:ajax update="valor" process="valor" event="change" /> 

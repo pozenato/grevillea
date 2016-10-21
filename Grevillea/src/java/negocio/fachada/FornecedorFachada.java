@@ -70,4 +70,8 @@ public class FornecedorFachada {
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
+
+    public void Alterar(Fornecedor fornecedor) {
+        fornecedorDAO.Alterar(fornecedor);
+    }
 }

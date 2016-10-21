@@ -54,6 +54,15 @@
                                 </f:facet>
                                 <h:outputText value="#{produto.marcaproduto}"/>
                             </p:column>
+                            
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{produtoManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{produto}" target="#{produtoManagedBean.produto}" />  
+                                </h:commandButton>                                                                   
+                            </p:column>
                         </p:dataTable>
 
                     </h:panelGrid>

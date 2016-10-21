@@ -38,15 +38,9 @@ public class TipoColaboradorDAO {
             return (TipoColaborador) query.getSingleResult();
     }
     
-    /*
-    public List<Fornecedor> buscaFornecedorPorNome(Fornecedor fornecedor) {
-        try {
-          Query query = em.createQuery("SELECT f FROM Fornecedor f WHERE UPPER(f.nomefornecedor) LIKE :keyword ORDER BY f.nomefornecedor");
-            query.setParameter("keyword", "%" + fornecedor.getNomefornecedor().toUpperCase() + "%");
-            return query.getResultList();
-        } catch (Exception e) {
-            return null;
-        }
-    } */
+   
+    public void Alterar(TipoColaborador tipoColaborador) {
+        em.merge(tipoColaborador);
+    }
 
 }

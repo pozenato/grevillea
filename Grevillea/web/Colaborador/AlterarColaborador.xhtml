@@ -21,19 +21,31 @@
                     <h:panelGrid columns="3" class="tamanho995">
                         <h:panelGrid columns="1">
                             <h:panelGrid columns="3">
-                                <h:outputLabel value="Nome: " for="nome"/>
-                                <p:inputText id="nome" value="#{colaboradorManagedBean.colaboradorAlteracao.nome}" required="true"
-                                              style="width: 400px;"/>
-                                <p:message for="nome"/>
-
-                                
+                                <h:outputLabel value="Nome: " for="nome" style="width: 80px"/>
+                                <p:inputText id="nome" value="#{colaboradorManagedBean.colaborador.nome}" readonly="true"
+                                             style="width: 400px;"/>
+                                <p:message for="nome"/>                                
                             </h:panelGrid>
-                            
+
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Tipo: " for="tipo" style="width: 80px"/>
+                                <p:inputText id="tipo" value="#{colaboradorManagedBean.colaborador.tipo.descricao}" readonly="true"
+                                             style="width: 400px;"/>
+                                <p:message for="tipo"/>                                
+                            </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Status:" for="status" style="width: 80px"/>
+                                <p:selectBooleanCheckbox  id="idstatus" value="#{colaboradorManagedBean.colaborador.status}"/>                            
+                            </h:panelGrid>     
                         </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:outputText value=" "/>
+                        </h:panelGrid>        
+
                     </h:panelGrid>
                     <div id="footerForm" class="title ui-widget-header ui-corner-all">
-                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{usuarioManagedBean.Alterar}" value="Salvar" id="confirmar"/>
-                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{usuarioManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{colaboradorManagedBean.Alterar}" value="Salvar" id="confirmar"/>
+                        <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{colaboradorManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
                     </div>
 
                 </h:form>

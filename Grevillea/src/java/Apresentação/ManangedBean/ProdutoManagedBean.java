@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import negocio.entidade.Produto;
 import negocio.fachada.ProdutoFachada;
 import org.primefaces.model.DualListModel;
@@ -22,7 +23,7 @@ import org.primefaces.model.DualListModel;
  * @author pozenato
  */
 @ManagedBean(name = "produtoManagedBean")
-@RequestScoped
+@SessionScoped
 public class ProdutoManagedBean {
 
     private Produto produto = new Produto();
@@ -41,6 +42,10 @@ public class ProdutoManagedBean {
         this.recuperarProdutos();
         return "/Produto/InserirProduto?faces-redirect=true";
     }
+    
+    public String montarPaginaParaAlteracao() {
+        return "/Produto/AlterarProduto?faces-redirect=true";
+    }
 
     public String Inserir() {
         produtoFachada.Inserir(produto);
@@ -48,10 +53,15 @@ public class ProdutoManagedBean {
         return "/Produto/ListarProdutos?faces-redirect=true";
     }
     
-
+    public String Alterar() {
+        produtoFachada.Alterar(produto);
+        this.recuperarProdutos();
+        return "/Produto/ListarProdutos?faces-redirect=true";
+    }
+    
     private void recuperarProdutos() {
-        setProdutoFiltro(produtoFachada.Listar());
-        this.setProdutos(produtoFachada.Listar());
+        produtoFiltro = produtoFachada.Listar();
+        this.produtos = produtoFachada.Listar();
     }
 
     public String listar() {
@@ -66,21 +76,6 @@ public class ProdutoManagedBean {
     /**
      * @param produto the produto to set
      */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
@@ -103,7 +98,6 @@ public class ProdutoManagedBean {
      * @return the produtos
      */
     public List<Produto> getProdutos() {
-        this.recuperarProdutos();
         return produtos;
     }
 

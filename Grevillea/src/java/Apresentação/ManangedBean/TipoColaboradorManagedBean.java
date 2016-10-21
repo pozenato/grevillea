@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import negocio.entidade.TipoColaborador;
 import negocio.fachada.TipoColaboradorFachada;
 
@@ -20,7 +21,7 @@ import negocio.fachada.TipoColaboradorFachada;
  * @author pozenato
  */
 @ManagedBean(name = "tipoColaboradorManagedBean")
-@RequestScoped
+@SessionScoped
 public class TipoColaboradorManagedBean {
 
     private TipoColaborador tipoColaborador = new TipoColaborador();
@@ -39,9 +40,19 @@ public class TipoColaboradorManagedBean {
         this.recuperarTipos();
         return "/TipoColaborador/InserirTipoColaborador?faces-redirect=true";
     }
+    
+    public String montarPaginaParaAlteracao() {
+        return "/TipoColaborador/AlterarTipoColaborador?faces-redirect=true";
+    }
 
     public String Inserir() {
         tipoColaboradorFachada.Inserir(tipoColaborador);
+        this.recuperarTipos();        
+        return "/TipoColaborador/ListarTipos?faces-redirect=true";
+    }
+    
+    public String Alterar() {
+        tipoColaboradorFachada.Alterar(tipoColaborador);
         this.recuperarTipos();        
         return "/TipoColaborador/ListarTipos?faces-redirect=true";
     }
@@ -82,7 +93,6 @@ public class TipoColaboradorManagedBean {
      * @return the tipoColaboradores
      */
     public List<TipoColaborador> getTipoColaboradores() {
-        this.recuperarTipos();
         return tipoColaboradores;
     }
 

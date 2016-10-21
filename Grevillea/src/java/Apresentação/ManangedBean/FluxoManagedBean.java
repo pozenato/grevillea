@@ -110,13 +110,15 @@ public class FluxoManagedBean {
         this.fluxo.setDatainsercao(new Date());
         if (render == 1) {
             this.fluxo.setTipo('D');
-        } else {
+        } else if (render == 2) {
             this.fluxo.setTipo('I');
+        } else {
+            this.fluxo.setTipo('G');
         }
         this.fluxo.setStatus(Boolean.TRUE);
         fluxoFachada.Inserir(getFluxo(), idDoProdutoSelecionado, idDoFornecedorSelecionado);
         this.recuperarFluxos();
-        return "/Fornecedor/ListarFornecedores?faces-redirect=true";
+        return this.montarPaginaParaInsercao();
     }
     
 

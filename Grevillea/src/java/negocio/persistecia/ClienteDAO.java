@@ -42,4 +42,8 @@ public class ClienteDAO {
         }
     }
 
+    public void Alterar(Cliente cliente) {
+        em.merge(cliente);
+    }
+
 }

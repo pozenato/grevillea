@@ -14,6 +14,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import negocio.entidade.Fornecedor;
 import negocio.fachada.FornecedorFachada;
 import org.primefaces.model.DualListModel;
@@ -24,7 +25,7 @@ import org.primefaces.model.DualListModel;
  * @author pozenato
  */
 @ManagedBean(name = "fornecedorManagedBean")
-@RequestScoped
+@SessionScoped
 public class FornecedorManagedBean {
 
     private Fornecedor fornecedor = new Fornecedor();
@@ -43,14 +44,23 @@ public class FornecedorManagedBean {
         this.recuperarFornecedores();
         return "/Fornecedor/InserirFornecedor?faces-redirect=true";
     }
+    
+    public String montarPaginaParaAlteracao() {
+        return "/Fornecedor/AlterarFornecedor?faces-redirect=true";
+    }
+    
+     public String Alterar() {
+        fornecedorFachada.Alterar(getFornecedor());
+        this.recuperarFornecedores();
+        return "/Fornecedor/ListarFornecedores?faces-redirect=true";
+    }  
 
     public String Inserir() {
         this.fornecedor.setDatacadastro(new Date());
         fornecedorFachada.Inserir(getFornecedor());
         this.recuperarFornecedores();
         return "/Fornecedor/ListarFornecedores?faces-redirect=true";
-    }
-    
+    }    
 
     private void recuperarFornecedores() {
         setFornecedorFiltro(getFornecedorFachada().Listar());
@@ -68,7 +78,6 @@ public class FornecedorManagedBean {
      * @return the Fornecedores
      */
     public List<Fornecedor> getFornecedores() {
-        this.recuperarFornecedores();
         return Fornecedores;
     }
 

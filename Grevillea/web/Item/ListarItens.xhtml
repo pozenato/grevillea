@@ -61,7 +61,15 @@
                                     <h:outputText value="Status do Item" />
                                 </f:facet>
                                 <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
-                            </p:column>                            
+                            </p:column>   
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{itemManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{item}" target="#{itemManagedBean.item}" />  
+                                </h:commandButton>                                                                   
+                            </p:column>
                         </p:dataTable>
 
                     </h:panelGrid>

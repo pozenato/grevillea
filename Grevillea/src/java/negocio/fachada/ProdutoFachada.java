@@ -27,5 +27,9 @@ public class ProdutoFachada {
     public List<Produto> Listar (){
         return produtoDAO.RecuperarTodos();        
     }   
+
+    public void Alterar(Produto produto) {
+        produtoDAO.Alterar(produto);
+    }
     
 }

@@ -59,4 +59,8 @@ public class TerceiroFachada {
     public void setEventoTerceiroDAO(EventoTerceiroDAO eventoTerceiroDAO) {
         this.eventoTerceiroDAO = eventoTerceiroDAO;
     }
+
+    public void ExcluirPorEvento(Evento evento) {
+        this.getEventoTerceiroDAO().removerTerceirosDoEvento(evento);
+    }
 }

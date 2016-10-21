@@ -60,8 +60,14 @@
                                 </f:facet>
                                 <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
                             </p:column>
-                            
-                            
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{colaboradorManagedBean.montarPaginaParaAlterar}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{colaborador}" target="#{colaboradorManagedBean.colaborador}" />  
+                                </h:commandButton>                                                                   
+                            </p:column>
                         </p:dataTable>
 
                     </h:panelGrid>

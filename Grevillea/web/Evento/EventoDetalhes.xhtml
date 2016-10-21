@@ -38,6 +38,24 @@
                                     <h:outputLabel for="email" value="Email do Cliente:" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial"/>
                                     <h:outputText id="emailtx" value="#{eventoManagedBean.evento.cliente.email}"  style="width: 400px; font-size: initial"/>
 
+                                    <h:outputLabel for="cpf" value="CPF do Cliente" style="font-weight: bold; color: black; width: 180px; font-size: initial"/>
+                                    <h:outputText id="cpf" value="#{eventoManagedBean.evento.cliente.cpf}"  style="width: 150px; font-size: initial"/>
+
+                                    <h:outputLabel for="rg" value="RG do Cliente:" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial"/>
+                                    <h:outputText id="rg" value="#{eventoManagedBean.evento.cliente.rg}"  style="width: 400px; font-size: initial"/>
+
+                                    <h:outputLabel for="endereco" value="Endereco do Cliente" style="font-weight: bold; color: black; width: 180px; font-size: initial"/>
+                                    <h:outputText id="endereco" value="#{eventoManagedBean.evento.cliente.endereco}"  style="width: 450px; font-size: initial"/>
+
+                                    <h:outputLabel for="espaco" value=""/>
+                                    <h:outputText id="espaco" value="" />
+
+                                    <h:outputLabel for="cidade" value="Cidade do Cliente" style="font-weight: bold; color: black; width: 180px; font-size: initial"/>
+                                    <h:outputText id="cidade" value="#{eventoManagedBean.evento.cliente.cidade}"  style="width: 150px; font-size: initial"/>
+
+                                    <h:outputLabel for="cep" value="Cep do Cliente:" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial"/>
+                                    <h:outputText id="cep" value="#{eventoManagedBean.evento.cliente.cep}"  style="width: 400px; font-size: initial"/>
+
                                     <h:outputLabel value="Data do Evento" for="dataevento" style="font-weight: bold; color: black; width: 180px; font-size: initial" />
                                     <h:outputText id="dataevento" style="width: 300px; font-size: initial" value="#{eventoManagedBean.evento.iddata}" >
                                         <f:convertDateTime type="date" dateStyle="medium"/>
@@ -58,6 +76,7 @@
                                     <h:outputLabel value="Status do Evento" for="status" style="font-weight: bold; color: black; width: 180px; font-size: initial" />
                                     <h:outputText id="status1" style="width: 300px; font-size: initial" value="Aguardando Confirmação" rendered="#{eventoManagedBean.evento.ativo == 'A'}" />
                                     <h:outputText id="status2" style="width: 300px; font-size: initial" value="Confirmado" rendered="#{eventoManagedBean.evento.ativo == 'C'}" />
+                                    <h:outputText id="status3" style="width: 300px; font-size: initial" value="Finalizado" rendered="#{eventoManagedBean.evento.ativo == 'F'}" />
 
                                     <h:outputLabel value="Contato:" for="contato" style="margin-left: 90px; font-weight: bold; color: black; font-size: initial" />
                                     <h:outputText id="contato" style="width: 200px; font-size: initial"  value="#{eventoManagedBean.evento.contato}" /> 
@@ -103,12 +122,27 @@
                                                   background-color: #FFFFFF; text-align: left; font-size: initial "/> 
                                 </h:panelGrid>
                             </p:fieldset> 
+                            <p:fieldset  id="avancar" rendered="#{eventoManagedBean.evento.ativo != 'F'}">
+
+                                <p:growl id="message" showDetail="true" />    
+
+                                <p:commandButton value="Finalizar Evento" action="#{eventoManagedBean.Finalizar}" update="message" style="margin-left: 10px;" styleClass="btn btn-success" >
+                                    <p:confirm header="Confirmação" message="Deseja realmente Finalizar esse evento?" icon="ui-icon-alert" />
+                                </p:commandButton>
+
+                                <p:confirmDialog global="true" showEffect="fade" >
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" style="margin-left: 10px;" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" style="margin-right: 10px; margin-left: 70px; " icon="ui-icon-close" />
+                                </p:confirmDialog>    
+
+                            </p:fieldset>
+
                         </p:tab>
                         <p:tab title="Pagamentos">
                             <h:panelGrid columns="2" cellpadding="10">
                                 <h:outputText value="Não existem Pagamentos cadastrados" rendered="#{empty eventoManagedBean.lancamentos}" />
 
-                                <p:dataTable id="lancamento" value="#{eventoManagedBean.lancamentos}" var="lancamento" rendered="#{not empty eventoManagedBean.lancamentos}"
+                                <p:dataTable id="listar-pagamento" value="#{eventoManagedBean.lancamentos}" var="lancamento" rendered="#{not empty eventoManagedBean.lancamentos}"
                                              filteredValue="#{eventoManagedBean.lancamentoFiltro}" scrollHeight="270" scrollable="true" >
                                     <p:column sortBy="#{lancamento.datalancamento}" filterBy="#{lancamento.datalancamento}">
                                         <f:facet name="header">
@@ -128,18 +162,18 @@
                                         </h:outputText>
                                     </p:column>      
 
-                                    <p:column sortBy="#{lancamento.datarecebimento}" filterBy="#{lancamento.datarecebimento}">
+                                    <p:column  sortBy="#{lancamento.datarecebimento}" filterBy="#{lancamento.datarecebimento}">
                                         <f:facet name="header">
                                             <h:outputText value="Recebimento"/>
                                         </f:facet>
-                                        <h:outputText value="#{lancamento.datarecebimento}">
+                                        <h:outputText style="width: 100px" value="#{lancamento.datarecebimento}">
                                             <f:convertDateTime type="date" dateStyle="medium"/>
                                         </h:outputText>
                                     </p:column> 
 
                                     <p:column sortBy="#{lancamento.valorprevisto}" filterBy="#{lancamento.valorprevisto}">
                                         <f:facet name="header">
-                                            <h:outputText value="Valor Previsto"/>
+                                            <h:outputText value="Vlr. Previsto"/>
                                         </f:facet>
                                         <h:outputText value="#{lancamento.valorprevisto}">
                                             <f:convertNumber pattern="#,##0.00"></f:convertNumber>
@@ -148,7 +182,7 @@
 
                                     <p:column sortBy="#{lancamento.valorrecebido}" filterBy="#{lancamento.valorrecebido}">
                                         <f:facet name="header">
-                                            <h:outputText value="Valor Recebido"/>
+                                            <h:outputText value="Vlr. Recebido"/>
                                         </f:facet>
                                         <h:outputText value="#{lancamento.valorrecebido}">
                                             <f:convertNumber pattern="#,##0.00"></f:convertNumber>
@@ -169,7 +203,7 @@
                                         <h:outputText value="#{lancamento.usuariorecebimento.nomeusuario}" />
                                     </p:column>
 
-                                    <p:column exportable="false">
+                                    <p:column exportable="false" style="width: 85px" rendered="#{eventoManagedBean.evento.ativo != 'F'}">
                                         <f:facet name="header">
                                             <h:outputText value=""/>
                                         </f:facet>
@@ -199,14 +233,16 @@
                                     </f:facet>
                                     <h:outputText value="#{colaborador.tipo.descricao}" />
                                 </p:column>      
-                                <p:column sortBy="#{colaborador.status}" filterBy="#{colaborador.status}">
+                                <p:column sortBy="#{colaborador.tipo.valor}" filterBy="#{colaborador.tipo.valor}">
                                     <f:facet name="header">
-                                        <h:outputText value="Status Colaborador"/>
+                                        <h:outputText value="Valor Diária"/>
                                     </f:facet>
-                                    <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
+                                    <h:outputText value="#{colaborador.tipo.valor}" >
+                                        <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                    </h:outputText>
                                 </p:column> 
 
-                                <p:column exportable="false">
+                                <p:column exportable="false" rendered="#{eventoManagedBean.evento.ativo != 'F'}">
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                     </f:facet>
@@ -216,10 +252,13 @@
                                 </p:column>
                             </p:dataTable>
 
-                            <div id="footerForm" class="title ui-widget-header ui-corner-all"  >
-                                <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddColaborador}" action="#{eventoManagedBean.popularColaborador}" value="Adicionar Colaborador" id="confirmar"/>
-                            </div>
+                            <h:panelGrid rendered="#{eventoManagedBean.evento.ativo != 'F'}">
 
+                                <div id="footerForm" class="title ui-widget-header ui-corner-all"  >
+                                    <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddColaborador}" action="#{eventoManagedBean.popularColaborador}" value="Adicionar Colaborador" id="confirmar"/>
+                                </div>
+
+                            </h:panelGrid>
                             <div >
                                 <h:panelGrid columns="2" cellpadding="10" rendered="#{eventoManagedBean.isAddColaborador}">
                                     <h:outputText value="Não existem Colaboradores cadastrados" rendered="#{empty eventoManagedBean.colaboradores}" />
@@ -238,12 +277,14 @@
                                             </f:facet>
                                             <h:outputText value="#{colaborador.tipo.descricao}" />
                                         </p:column>      
-                                        <p:column sortBy="#{colaborador.status}" filterBy="#{colaborador.status}">
+                                        <p:column sortBy="#{colaborador.tipo.valor}" filterBy="#{colaborador.tipo.valor}">
                                             <f:facet name="header">
-                                                <h:outputText value="Status Colaborador"/>
+                                                <h:outputText value="Valor Diária"/>
                                             </f:facet>
-                                            <p:selectBooleanCheckbox value="#{colaborador.status}" disabled="true"/>
-                                        </p:column> 
+                                            <h:outputText value="#{colaborador.tipo.valor}" >
+                                                <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                            </h:outputText>
+                                        </p:column>  
 
                                         <p:column exportable="false">
                                             <f:facet name="header">
@@ -265,9 +306,9 @@
 
                         <p:tab title="Terceiros">
 
-                            <h:outputText value="Não existem Terceiros cadastrados para esse Evento" rendered="#{empty eventoManagedBean.terceiroFiltroAdd}" />
+                            <h:outputText value="Não existem Terceiros cadastrados para esse Evento" rendered="#{empty eventoManagedBean.terceirosAdd}" />
 
-                            <p:dataTable id="terceiro" value="#{eventoManagedBean.terceiroFiltroAdd}" var="terceiro" rendered="#{not empty eventoManagedBean.terceiroFiltroAdd}"
+                            <p:dataTable id="terceiro" value="#{eventoManagedBean.terceirosAdd}" var="terceiro" rendered="#{not empty eventoManagedBean.terceirosAdd}"
                                          filteredValue="#{eventoManagedBean.terceiroFiltroAdd}" scrollHeight="270" scrollable="true" >
                                 <p:column sortBy="#{terceiro.nome}" filterBy="#{terceiro.nome}">
                                     <f:facet name="header">
@@ -288,7 +329,7 @@
                                     <p:selectBooleanCheckbox value="#{terceiro.status}" disabled="true"/>
                                 </p:column> 
 
-                                <p:column exportable="false">
+                                <p:column exportable="false" rendered="#{eventoManagedBean.evento.ativo != 'F'}">
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                     </f:facet>
@@ -298,15 +339,19 @@
                                 </p:column>
                             </p:dataTable>
 
-                            <div id="footerForm" class="title ui-widget-header ui-corner-all"  >
-                                <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddTerceiro}" action="#{eventoManagedBean.popularTerceiro}" value="Adicionar Terceiro" id="confirmarTerceiro"/>
-                            </div>
+                            <h:panelGrid rendered="#{eventoManagedBean.evento.ativo != 'F'}">
+
+                                <div id="footerForm" class="title ui-widget-header ui-corner-all"  >
+                                    <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddTerceiro}" action="#{eventoManagedBean.popularTerceiro}" value="Adicionar Terceiro" id="confirmarTerceiro"/>
+                                </div>
+
+                            </h:panelGrid>
 
                             <div >
                                 <h:panelGrid columns="2" cellpadding="10" rendered="#{eventoManagedBean.isAddTerceiro}">
                                     <h:outputText value="Não existem Terceiros cadastrados" rendered="#{empty eventoManagedBean.terceiros}" />
 
-                                    <p:dataTable id="terceiroAdd" value="#{eventoManagedBean.colaboradores}" var="terceiro" rendered="#{not empty eventoManagedBean.terceiros}"
+                                    <p:dataTable id="terceiroAdd" value="#{eventoManagedBean.terceiros}" var="terceiro" rendered="#{not empty eventoManagedBean.terceiros}"
                                                  filteredValue="#{eventoManagedBean.terceiroFiltro}" scrollHeight="270" scrollable="true" >
                                         <p:column sortBy="#{terceiro.nome}" filterBy="#{terceiro.nome}">
                                             <f:facet name="header">
@@ -370,7 +415,7 @@
                                     <p:selectBooleanCheckbox value="#{item.status}" disabled="true"/>
                                 </p:column> 
 
-                                <p:column exportable="false">
+                                <p:column exportable="false" rendered="#{eventoManagedBean.evento.ativo != 'F'}">
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                     </f:facet>
@@ -380,9 +425,13 @@
                                 </p:column>
                             </p:dataTable>
 
-                            <div id="FooterDecoracao" class="title ui-widget-header ui-corner-all"  >
-                                <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddDecoracao}" action="#{eventoManagedBean.popularDecoracao}" value="Adicionar Item" id="confirmarItem"/>
-                            </div>
+                            <h:panelGrid rendered="#{eventoManagedBean.evento.ativo != 'F'}">
+
+                                <div id="FooterDecoracao" class="title ui-widget-header ui-corner-all"  >
+                                    <h:commandButton  styleClass="btn btn-success" rendered="#{!eventoManagedBean.isAddDecoracao}" action="#{eventoManagedBean.popularDecoracao}" value="Adicionar Item" id="confirmarItem"/>
+                                </div>
+
+                            </h:panelGrid>
 
                             <div >
                                 <h:panelGrid columns="2" cellpadding="10" rendered="#{eventoManagedBean.isAddDecoracao}">

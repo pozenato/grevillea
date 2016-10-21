@@ -45,6 +45,10 @@ public class EventoDAO {
          return em.createQuery("select e from Evento as e order by e.idevento").getResultList();
     } 
     
+    public List<Evento> RecuperarEventoDetalhe(){
+         return em.createQuery("select e from Evento as e WHERE e.ativo = 'C' or e.ativo = 'F' order by e.idevento desc").getResultList();
+    } 
+    
     public List<Evento> RecuperarConfirmados(){
          return em.createQuery("select e from Evento as e WHERE e.ativo = 'C' order by e.idevento desc").getResultList();
     } 

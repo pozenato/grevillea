@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import negocio.entidade.Produto;
 import negocio.entidade.Terceiro;
 import negocio.entidade.TerceiroTipo;
@@ -27,7 +28,7 @@ import org.primefaces.model.DualListModel;
  * @author pozenato
  */
 @ManagedBean(name = "terceiroManagedBean")
-@RequestScoped
+@SessionScoped
 public class TerceiroManagedBean {
 
     private Terceiro terceiro = new Terceiro();
@@ -70,8 +71,8 @@ public class TerceiroManagedBean {
     
 
     private void recuperarTerceiros() {
-        setTerceiroFiltro(terceiroFachada.Listar());
-        this.setTerceiros(terceiroFachada.Listar());
+        terceiroFiltro = terceiroFachada.Listar();
+        this.terceiros = terceiroFachada.Listar();
     }
 
     public String listar() {
@@ -109,7 +110,6 @@ public class TerceiroManagedBean {
      * @return the terceiros
      */
     public List<Terceiro> getTerceiros() {
-        this.recuperarTerceiros();
         return terceiros;
     }
 

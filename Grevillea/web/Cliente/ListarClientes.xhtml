@@ -62,6 +62,14 @@
                                 </f:facet>
                                 <h:outputText value="#{cliente.telefone}" />
                             </p:column> 
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{clienteManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{cliente}" target="#{clienteManagedBean.cliente}" />  
+                                </h:commandButton>                                                                   
+                            </p:column>
                             
                         </p:dataTable>
 

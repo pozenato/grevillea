@@ -52,7 +52,18 @@
                                 <f:facet name="header">
                                     <h:outputText value="Valor do Tipo" />
                                 </f:facet>
-                                <h:outputText value="#{tipo.valor}"/>
+                                <h:outputText value="#{tipo.valor}">
+                                    <f:convertNumber pattern="#,##0.00"></f:convertNumber>
+                                </h:outputText>
+                            </p:column>
+                            
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{tipoColaboradorManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{tipo}" target="#{tipoColaboradorManagedBean.tipoColaborador}" />  
+                                </h:commandButton>                                                                   
                             </p:column>
                         </p:dataTable>
 

@@ -82,4 +82,8 @@ public class TipoColaboradorFachada {
         this.tipoColaboradorDAO = tipoColaboradorDAO;
     }
 
+    public void Alterar(TipoColaborador tipoColaborador) {
+        tipoColaboradorDAO.Alterar(tipoColaborador);
+    }
+
 }

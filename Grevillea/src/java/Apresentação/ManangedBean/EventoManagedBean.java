@@ -24,6 +24,7 @@ import javax.faces.model.SelectItem;
 import negocio.entidade.Cliente;
 import negocio.entidade.Colaborador;
 import negocio.entidade.Evento;
+import negocio.entidade.Fluxocaixa;
 import negocio.entidade.Item;
 import negocio.entidade.Tipo;
 import negocio.entidade.Lancamento;
@@ -34,6 +35,7 @@ import negocio.excecao.MensagemUtility;
 import negocio.fachada.ClienteFachada;
 import negocio.fachada.ColaboradorFachada;
 import negocio.fachada.EventoFachada;
+import negocio.fachada.FluxoFachada;
 import negocio.fachada.ItemFachada;
 import negocio.fachada.LancamentoFachada;
 import negocio.fachada.TerceiroFachada;
@@ -52,10 +54,12 @@ import org.primefaces.model.ScheduleModel;
 @ManagedBean(name = "eventoManagedBean")
 @SessionScoped
 public class EventoManagedBean implements java.io.Serializable {
+
     public static final String PROP_DATAFIM = "PROP_DATAFIM";
 
     private Evento evento = new Evento();
     private Lancamento lancamento = new Lancamento();
+    private Lancamento lancPesquisa = new Lancamento();
     private List<Cliente> clientes;
     private List<Cliente> clienteFiltro;
     private List<Evento> eventos = new ArrayList<>();
@@ -100,8 +104,9 @@ public class EventoManagedBean implements java.io.Serializable {
     private Colaborador colaborador = new Colaborador();
     private double valorTotalRecebimento;
     private double valorRecebidoEvento;
+    private double valorDespesa;
     private ScheduleModel eventModel;
-
+    private Fluxocaixa despesa;
     private ScheduleModel lazyEventModel;
 
     private ScheduleEvent event = new DefaultScheduleEvent();
@@ -123,6 +128,9 @@ public class EventoManagedBean implements java.io.Serializable {
 
     @EJB
     private ClienteFachada clienteFachada;
+
+    @EJB
+    private FluxoFachada flexocaixaFachada;
 
     @EJB
     private ColaboradorFachada colaboradorFachada;
@@ -223,7 +231,7 @@ public class EventoManagedBean implements java.io.Serializable {
     }
 
     public String montaPaginaParaListarConfirmados() {
-        this.recuperarEventosConfirmados();
+        this.recuperarEventosDetalhes();
         return "/Evento/ListarEventosDetalhes?faces-redirect=true";
     }
 
@@ -240,6 +248,7 @@ public class EventoManagedBean implements java.io.Serializable {
         this.getEvento().setTipo(tipo);
         this.getEvento().setUsuario(recuperarUsuarioCadastro());
         eventoFachada.Inserir(this.getEvento());
+        this.recuperarEventos();
         return "/Evento/ListarEventos?faces-redirect=true";
     }
 
@@ -279,7 +288,6 @@ public class EventoManagedBean implements java.io.Serializable {
     public String ConfirmarRecebimento() {
         this.getLancamento().setDatarecebimento(new Date());
         this.getLancamento().setUsuariorecebimento(recuperarUsuarioCadastro());
-        this.getLancamento().setValorrecebido(this.getLancamento().getValorprevisto());
         lancamentoFachada.ConfirmarPagamento(this.getLancamento());
         this.recuperarLancamentos(evento);
         return this.montaPaginaParaDetalhes();
@@ -291,11 +299,40 @@ public class EventoManagedBean implements java.io.Serializable {
         return "/Evento/ListarEventos?faces-redirect=true";
     }
 
-    public String Excluir() {
+    public String Finalizar() {
+        this.getEvento().setAtivo('F');
+        eventoFachada.Alterar(this.getEvento());
+        this.LancarDespesasPorEvento(this.getEvento());
+        return "/Evento/EventoDetalhes?faces-redirect=true";
+    }
+
+    public void LancarDespesasPorEvento(Evento evento) {
+        this.recuperarColaboradoresAdd(evento);
+        valorDespesa = 0.0;
+        this.despesa = new Fluxocaixa();
+        if (this.colaboradoresAdd.size() > 0) {
+            for (Colaborador colaborador : colaboradoresAdd) {
+                valorDespesa += colaborador.getTipo().getValor();
+            }
+            this.despesa.setDatadespesa(evento.getIddata());
+            this.despesa.setDatainsercao(new Date());
+            this.despesa.setTipo('G');
+            this.despesa.setStatus(true);
+            this.despesa.setValor((float) valorDespesa);
+            this.flexocaixaFachada.Inserir(despesa, 1, 1);
+        }
+    }
+
+    public String Excluir() throws CampoUniqueException {
         try {
-            eventoFachada.Excluir(this.getEvento());
-            this.recuperarEventos();
-            return "/Evento/ListarEventos?faces-redirect=true";
+            if (this.getEvento().getAtivo() == 'C' && recuperarUsuarioCadastro().getTipouser() != 'A') {
+                MensagemUtility.adicionarMensagemDeErro("formDetalhes", "Evento Confirmado! Exclusão não permitida para esse Usuário");
+                return "";
+            } else {
+                eventoFachada.Excluir(this.getEvento());
+                this.recuperarEventos();
+                return "/Evento/ListarEventos?faces-redirect=true";
+            }
         } catch (Exception e) {
             MensagemUtility.adicionarMensagemDeErro("formDetalhes", e.getMessage());
             return "";
@@ -348,7 +385,7 @@ public class EventoManagedBean implements java.io.Serializable {
         this.setLancamentos(lancamentoFachada.ListarParaPagamento(evento));
         this.setLancamentoFiltro(lancamentoFachada.ListarParaPagamento(evento));
         double valorRecebido = 0.0;
-        for (Lancamento lancEvenco : lancamentos){
+        for (Lancamento lancEvenco : lancamentos) {
             valorRecebido += lancEvenco.getValorrecebido();
         }
         this.setValorRecebidoEvento(valorRecebido);
@@ -362,6 +399,11 @@ public class EventoManagedBean implements java.io.Serializable {
     private void recuperarEventosConfirmados() {
         this.setEventosConfirmados(eventoFachada.ListarConfirmados());
         this.setEventoFiltroConfirmados(eventoFachada.ListarConfirmados());
+    }
+
+    private void recuperarEventosDetalhes() {
+        this.setEventosConfirmados(eventoFachada.ListarEventosDetalhes());
+        this.setEventoFiltroConfirmados(eventoFachada.ListarEventosDetalhes());
     }
 
     public String montarPaginaParaAdicionarColaborador() {
@@ -442,32 +484,34 @@ public class EventoManagedBean implements java.io.Serializable {
         this.init();
         return "/Evento/ConsultaEvento?faces-redirect=true";
     }
-    
-    public String montarPaginaParaPesquisarPagamento(){
-        this.recebimentos = new ArrayList<>();        
+
+    public String montarPaginaParaPesquisarPagamento() {
+        lancPesquisa = new Lancamento();
+        this.recebimentos = new ArrayList<>();
         return "/Fluxo/ListarRecebimentos?faces-redirect=true";
     }
-    
-    public String montarPaginaParaPesquisarPagamentoFuturo(){
-        this.recebimentos = new ArrayList<>(); 
+
+    public String montarPaginaParaPesquisarPagamentoFuturo() {
+        lancPesquisa = new Lancamento();
+        this.recebimentos = new ArrayList<>();
         return "/Fluxo/ListarRecebimentosFuturos?faces-redirect=true";
     }
-    
-    public void ListarRecebimentoPorData(){
-        this.recebimentos = lancamentoFachada.ListarRecebimentoPorData(this.getDataInit(), this.getDataFim());
+
+    public void ListarRecebimentoPorData() {
+        this.recebimentos = lancamentoFachada.ListarRecebimentoPorData(this.lancPesquisa.getDataprevisao(), this.lancPesquisa.getDatarecebimento());
         this.qteLancamento = recebimentos.size();
         valorTotalRecebimento = 0.0;
-        for (Lancamento lanc : recebimentos){
+        for (Lancamento lanc : recebimentos) {
             valorTotalRecebimento += lanc.getValorrecebido();
         }
     }
-    
-     public void ListarRecebimentoPrevistoPorData(){
-        this.recebimentos = lancamentoFachada.ListarRecebimentoPrevistoPorData(this.getDataInit(), this.getDataFim());
+
+    public void ListarRecebimentoPrevistoPorData() {
+        this.recebimentos = lancamentoFachada.ListarRecebimentoPrevistoPorData(this.lancPesquisa.getDataprevisao(), this.lancPesquisa.getDatarecebimento());
         this.qteLancamento = recebimentos.size();
         valorTotalRecebimento = 0.0;
-        for (Lancamento lanc : recebimentos){
-            valorTotalRecebimento += lanc.getValorrecebido();
+        for (Lancamento lanc : recebimentos) {
+            valorTotalRecebimento += lanc.getValorprevisto();
         }
     }
 
@@ -518,7 +562,7 @@ public class EventoManagedBean implements java.io.Serializable {
     public void imprimePDF(Object document) throws IOException, BadElementException, DocumentException {
         impressaoManagedBean.preProcessPDF(document, "Lista de Eventos");
     }
-    
+
     public void imprimeRecebimentoPDF(Object document) throws IOException, BadElementException, DocumentException {
         impressaoManagedBean.preProcessPDF(document, "Lista de Recebimentos");
     }
@@ -1253,6 +1297,62 @@ public class EventoManagedBean implements java.io.Serializable {
      */
     public void setValorRecebidoEvento(double valorRecebidoEvento) {
         this.valorRecebidoEvento = valorRecebidoEvento;
+    }
+
+    /**
+     * @return the lancPesquisa
+     */
+    public Lancamento getLancPesquisa() {
+        return lancPesquisa;
+    }
+
+    /**
+     * @param lancPesquisa the lancPesquisa to set
+     */
+    public void setLancPesquisa(Lancamento lancPesquisa) {
+        this.lancPesquisa = lancPesquisa;
+    }
+
+    /**
+     * @return the despesa
+     */
+    public Fluxocaixa getDespesa() {
+        return despesa;
+    }
+
+    /**
+     * @param despesa the despesa to set
+     */
+    public void setDespesa(Fluxocaixa despesa) {
+        this.despesa = despesa;
+    }
+
+    /**
+     * @return the valorDespesa
+     */
+    public double getValorDespesa() {
+        return valorDespesa;
+    }
+
+    /**
+     * @param valorDespesa the valorDespesa to set
+     */
+    public void setValorDespesa(double valorDespesa) {
+        this.valorDespesa = valorDespesa;
+    }
+
+    /**
+     * @return the flexocaixaFachada
+     */
+    public FluxoFachada getFlexocaixaFachada() {
+        return flexocaixaFachada;
+    }
+
+    /**
+     * @param flexocaixaFachada the flexocaixaFachada to set
+     */
+    public void setFlexocaixaFachada(FluxoFachada flexocaixaFachada) {
+        this.flexocaixaFachada = flexocaixaFachada;
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import negocio.entidade.Cliente;
 import negocio.fachada.ClienteFachada;
 import org.primefaces.model.DualListModel;
@@ -22,7 +23,7 @@ import org.primefaces.model.DualListModel;
  * @author pozenato
  */
 @ManagedBean(name = "clienteManagedBean")
-@RequestScoped
+@SessionScoped
 public class ClienteManagedBean {
 
     private Cliente cliente = new Cliente();
@@ -40,6 +41,16 @@ public class ClienteManagedBean {
         this.setCliente(new Cliente());
         this.recuperarClientes();
         return "/Cliente/InserirCliente?faces-redirect=true";
+    }
+    
+     public String montarPaginaParaAlteracao() {
+        return "/Cliente/AlterarCliente?faces-redirect=true";
+    }
+     
+    public String Alterar() {
+        clienteFachada.Alterar(cliente);
+        this.recuperarClientes();
+        return "/Cliente/ListarClientes?faces-redirect=true";
     }
 
     public String Inserir() {

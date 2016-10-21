@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import negocio.entidade.Item;
 import negocio.fachada.ItemFachada;
 import org.primefaces.model.DualListModel;
@@ -23,8 +24,8 @@ import org.primefaces.model.DualListModel;
  * @author pozenato
  */
 @ManagedBean(name = "itemManagedBean")
-@RequestScoped
-public class ItemManagedBean {
+@SessionScoped
+public class ItemManagedBean {  
 
     private Item item = new Item();
     private List<Item> Itens;
@@ -38,8 +39,7 @@ public class ItemManagedBean {
     }
 
     public String montarPaginaParaInsercao() {
-        this.item = new Item();
-        this.recuperarItens();
+        this.item = new Item();        
         return "/Item/InserirItem?faces-redirect=true";
     }
     
@@ -88,7 +88,6 @@ public class ItemManagedBean {
      * @return the Itens
      */
     public List<Item> getItens() {
-        this.recuperarItens();
         return Itens;
     }
 

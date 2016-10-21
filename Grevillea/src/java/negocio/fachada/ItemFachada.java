@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import negocio.entidade.Evento;
 import negocio.entidade.Item;
+import negocio.persistecia.DecoracaoDAO;
 import negocio.persistecia.ItemDAO;
 
 /**
@@ -19,6 +21,9 @@ import negocio.persistecia.ItemDAO;
 public class ItemFachada {
     @EJB
     private ItemDAO itemDAO;
+    
+    @EJB
+    private DecoracaoDAO decoracaoDAO;
 
     public void Inserir(Item item){
         itemDAO.Inserir(item);
@@ -30,5 +35,9 @@ public class ItemFachada {
     
     public List<Item> Listar (){
         return itemDAO.RecuperarTodos();        
+    }
+
+    public void ExcluirPorEvento(Evento evento) {
+        this.decoracaoDAO.removerDecoracaoDoEvento(evento);
     }
 }

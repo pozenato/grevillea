@@ -54,11 +54,19 @@
                                 </f:facet>
                                 <h:outputText value="#{terceiro.tipo.descricao}"/>
                             </p:column>
-                            <p:column sortBy="#{terceiro.status}"  filterBy="#{terceiro.status}">
+                            <p:column sortBy="#{terceiro.status}" styleClass="center"  filterBy="#{terceiro.status}">
                                 <f:facet name="header">
                                     <h:outputText value="Status do Terceiro" />
                                 </f:facet>
                                 <p:selectBooleanCheckbox value="#{terceiro.status}" disabled="true"/>
+                            </p:column>
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{terceiroManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{terceiro}" target="#{terceiroManagedBean.terceiro}" />  
+                                </h:commandButton>                                                                   
                             </p:column>
                             
                         </p:dataTable>

@@ -70,4 +70,8 @@ public class ClienteFachada {
     public void setNomeCorrigido(String nomeCorrigido) {
         this.nomeCorrigido = nomeCorrigido;
     }
+
+    public void Alterar(Cliente cliente) {
+        clienteDAO.Alterar(cliente);
+    }
 }

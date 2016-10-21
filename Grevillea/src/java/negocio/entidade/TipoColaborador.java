@@ -48,8 +48,8 @@ public class TipoColaborador implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descricao")
     private String descricao;
-    @Column(name = "valor")
-    private BigInteger valor;
+    @Column(name = "valor", columnDefinition="Decimal(10,2)")
+    private float valor;
     
     @OneToOne(mappedBy = "tipo", fetch = FetchType.LAZY)
     private Colaborador colaborador;
@@ -77,11 +77,11 @@ public class TipoColaborador implements Serializable {
         this.descricao = descricao;
     }
 
-    public BigInteger getValor() {
+    public float getValor() {
         return valor;
     }
 
-    public void setValor(BigInteger valor) {
+    public void setValor(float valor) {
         this.valor = valor;
     }
 

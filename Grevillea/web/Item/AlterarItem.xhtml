@@ -21,25 +21,25 @@
                     <h:panelGrid columns="3" class="tamanho995">
                         <h:panelGrid columns="1">
                             <h:panelGrid columns="2">
-                                <h:outputLabel value="Descrição: " for="descricao"/>
+                                <h:outputLabel value="Descrição: " for="descricao" style="width: 90px" />
                                 <p:inputText id="descricao" value="#{itemManagedBean.item.descricao}" readonly="true" required="true"
                                              requiredMessage="Preenchimento Obrigatório" style="width: 400px;"/>
                                 <p:message for="descricao"/>
                             </h:panelGrid>
                             <h:panelGrid columns="2">
-                                <h:outputLabel value="Cor: " for="cor"/>
+                                <h:outputLabel value="Cor: " for="cor" style="width: 90px"/>
                                 <p:inputText id="cor" value="#{itemManagedBean.item.cor}" required="true" readonly="true"
                                              requiredMessage="Preenchimento Obrigatório" style="width: 400px;"/>
                                 <p:message for="cor"/>
                             </h:panelGrid>
-                        </h:panelGrid>
-                        <h:panelGrid columns="3">
-                            <h:outputLabel value="Status:" for="status"/>
-                            <p:selectBooleanCheckbox  id="idstatus" value="#{itemManagedBean.item.status}"/>                            
-                        </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Status:" for="status" style="width: 90px"/>
+                                <p:selectBooleanCheckbox  id="idstatus" value="#{itemManagedBean.item.status}"/>                            
+                            </h:panelGrid>
+                        </h:panelGrid>                        
                     </h:panelGrid>
-                    <div id="footerFormItem" class="title ui-widget-header ui-corner-all">
-                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{itemManagedBean.Alterar}" value="Alterar" id="Alterar"/>
+                    <div id="footerForm" class="title ui-widget-header ui-corner-all">
+                        <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{itemManagedBean.Alterar}" value="Salvar" id="confirmar"/>
                         <h:commandButton style="margin-right: 10px; float: right" styleClass="btn" action="#{itemManagedBean.listar}" value="Cancelar" id="cancelar" immediate="true"/>                        
                     </div>
 

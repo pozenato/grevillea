@@ -70,19 +70,17 @@
                                 </f:facet>
                                 <h:outputText value="Aguardando Confirmação" rendered="#{evento.ativo == 'A'}" />
                                 <h:outputText value="Confirmado" rendered="#{evento.ativo == 'C'}" />
+                                <h:outputText value="Finalizado" rendered="#{evento.ativo == 'F'}" />
                             </p:column>
                             
                             <p:column exportable="false">
                                 <f:facet name="header">
                                     <h:outputText value=""/>
                                 </f:facet>
-                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{eventoManagedBean.montaPaginaParaAlteracao}" value="Alterar">
-                                    <f:setPropertyActionListener value="#{evento}" target="#{eventoManagedBean.evento}" />  
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{eventoManagedBean.montaPaginaParaAlteracao}" rendered="#{evento.ativo != 'F'}"  value="Alterar">
+                                    <f:setPropertyActionListener value="#{evento}" target="#{eventoManagedBean.evento}"/>  
                                 </h:commandButton>
-                                <h:outputText value=" " ></h:outputText>
-                                <h:commandButton styleClass="btn btn-danger btn-small" action="#{eventoManagedBean.Excluir}" value="Excluir">
-                                    <f:setPropertyActionListener value="#{evento}" target="#{eventoManagedBean.evento}" />  
-                                </h:commandButton>                                     
+                                                              
                             </p:column>
                         </p:dataTable>
 

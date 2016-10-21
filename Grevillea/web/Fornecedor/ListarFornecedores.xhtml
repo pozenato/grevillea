@@ -61,8 +61,19 @@
                                     <h:outputText value="Telefone"/>
                                 </f:facet>
                                 <h:outputText value="#{fornecedor.telefone}" />
-                            </p:column>                             
-                        </p:dataTable>
+                            </p:column>  
+                            
+                            <p:column exportable="false">
+                                <f:facet name="header">
+                                    <h:outputText value=""/>
+                                </f:facet>
+                                <h:commandButton styleClass="btn btn-warning btn-small" action="#{fornecedorManagedBean.montarPaginaParaAlteracao}" value="Alterar">
+                                    <f:setPropertyActionListener value="#{fornecedor}" target="#{fornecedorManagedBean.fornecedor}" />  
+                                </h:commandButton>                                                                   
+                            </p:column>
+                            
+                        </p:dataTable>                       
+                        
 
                     </h:panelGrid>
 

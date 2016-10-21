@@ -34,4 +34,8 @@ public class ProdutoDAO {
         return em.find(Produto.class, id);
     }
 
+    public void Alterar(Produto produto) {
+        em.merge(produto);
+    }
+
 }

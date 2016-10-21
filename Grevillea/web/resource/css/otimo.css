@@ -99,6 +99,11 @@ section{
     text-align: left;
 }
 
+#listar-pagamento
+.ui-datatable .ui-column-filter{
+    width: 85px !important;
+}
+
 #direita{
     float: right;
     width: 300px;

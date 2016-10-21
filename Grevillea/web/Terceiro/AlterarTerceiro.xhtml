@@ -22,30 +22,25 @@
                     <h:panelGrid columns="3" class="tamanho995">
                         <h:panelGrid columns="1">
                             <h:panelGrid columns="3">
-                                <h:outputLabel value="Nome do Terceiro " for="nome"/>
+                                <h:outputLabel value="Nome do Terceiro " for="nome" style="width: 140px"/>
                                 <p:inputText id="nome" value="#{terceiroManagedBean.terceiro.nome}" required="true"
                                              requiredMessage="Preenchimento Obrigatório" style="width: 400px;" readonly="true"/>
                                 <p:message for="nome"/>
                             </h:panelGrid>
-                            <h:panelGrid columns="1">
-                                <h:outputLabel value="Selecione o tipo de Terceiro" for="tipo" />                            
-                                <p:selectOneMenu id="tipo" value="#{terceiroManagedBean.render}" disabled="true">
-                                    <f:selectItem itemValue="0" itemLabel="Selecione:"/>
-                                    <f:selectItem itemValue="1" itemLabel="Banda"/>
-                                    <f:selectItem itemValue="2" itemLabel="Fotografo"/>
-                                    <f:selectItem itemValue="3" itemLabel="Decorador"/>
-                                    <f:selectItem itemValue="4" itemLabel="Confeiteiro"/>
-                                    <f:selectItem itemValue="5" itemLabel="Cerimonialista"/>
-                                </p:selectOneMenu>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Tipo Terceiro " for="tipo" style="width: 140px"/>
+                                <p:inputText id="tipo" value="#{terceiroManagedBean.terceiro.tipo.descricao}" required="true"
+                                             requiredMessage="Preenchimento Obrigatório" style="width: 400px;" readonly="true"/>
+                                <p:message for="tipo"/>
                             </h:panelGrid>
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Status:" for="status" style="width: 140px"/>
+                                <p:selectBooleanCheckbox  id="idstatus" value="#{terceiroManagedBean.terceiro.status}"/>                            
+                            </h:panelGrid>     
                         </h:panelGrid>
                         <h:panelGrid columns="3">
                             <h:outputText value=" "/>
-                        </h:panelGrid>
-                        <h:panelGrid columns="3">
-                            <h:outputLabel value="Status:" for="status"/>
-                            <p:selectBooleanCheckbox  id="idstatus" value="#{terceiroManagedBean.terceiro.status}"/>                            
-                        </h:panelGrid>                        
+                        </h:panelGrid>                                           
                     </h:panelGrid>
                     <div id="footerForm" class="title ui-widget-header ui-corner-all">
                         <h:commandButton style="margin-left: 10px;" styleClass="btn btn-success" action="#{terceiroManagedBean.Alterar}" value="Salvar" id="confirmar"/>

@@ -24,6 +24,7 @@ import negocio.persistecia.DecoracaoDAO;
 import negocio.persistecia.EventoColaboradorDAO;
 import negocio.persistecia.EventoDAO;
 import negocio.persistecia.EventoTerceiroDAO;
+import negocio.persistecia.LancamentoDAO;
 
 /**
  *
@@ -37,7 +38,7 @@ public class EventoFachada {
     private static final String AGENDAMENTO_DEFINITIVO = "A Data Informa já foi Confirmada para outro Evento!";
     private static final String EXCLUSAO_RECUSADA = "Evento Confirmado! Exclusão não permitida!";
     private static final String ERRO_EXCLUSAO = "Ocorreu um erro durante o processo de Exclusão. Entre em contato com o Administrador!";
-    
+
     /**
      * @return the DATA_E_INFORMADA_JA_AGENDADA
      */
@@ -75,9 +76,12 @@ public class EventoFachada {
 
     @EJB
     private EventoTerceiroDAO eventoTerceiroDAO;
-    
+
     @EJB
     private DecoracaoDAO decoracaoDAO;
+
+    @EJB
+    private LancamentoDAO lancamentoDAO;
 
     public void Inserir(Evento evento) {
         eventoDAO.Inserir(evento);
@@ -88,34 +92,34 @@ public class EventoFachada {
     }
 
     public void Excluir(Evento evento) throws CampoUniqueException {
-        if (evento.getAtivo() == 'C') {
-            throw new CampoUniqueException(getEXCLUSAO_RECUSADA());
-        } else {
+        try {
             if (eventoColaboradorDAO.removerColaboradoresDoEvento(evento)
-                    && eventoTerceiroDAO.removerTerceirosDoEvento(evento)) {
+                    && eventoTerceiroDAO.removerTerceirosDoEvento(evento)
+                    && lancamentoDAO.removerLancamentoDoEvento(evento)
+                    && decoracaoDAO.removerDecoracaoDoEvento(evento)) {
                 eventoDAO.Excluir(evento);
-            } else {
-                throw new CampoUniqueException(getERRO_EXCLUSAO());
             }
+        } catch (Exception e) {
+            throw new CampoUniqueException(getERRO_EXCLUSAO());
         }
     }
 
     public List<Evento> Listar() {
         return eventoDAO.RecuperarTodos();
     }
-    
-    public List<Item> ListarDecoracaoEvento (Evento evento){
+
+    public List<Item> ListarDecoracaoEvento(Evento evento) {
         return decoracaoDAO.BuscarItemPorEvento(evento);
     }
-    
-    public List<Item> ListarDecoracaoNaoPertenceEvento (Evento evento){
+
+    public List<Item> ListarDecoracaoNaoPertenceEvento(Evento evento) {
         return decoracaoDAO.BuscarItemQueNaoPertenceEvento(evento);
     }
 
     public void InserirColaborador(List<Colaborador> colaboradores, Evento evento) throws CampoUniqueException {
         if (eventoColaboradorDAO.removerColaboradoresDoEvento(evento)) {
             try {
-                for (Colaborador colab : colaboradores) {   
+                for (Colaborador colab : colaboradores) {
                     EventoColaborador eventoColaborador = new EventoColaborador();
                     eventoColaborador.setIdcolaborador(colab.getIdcolaborador());
                     eventoColaborador.setIdevento(evento.getIdevento());
@@ -128,11 +132,11 @@ public class EventoFachada {
             throw new CampoUniqueException(getERRO_EXCLUSAO());
         }
     }
-    
+
     public void InserirTerceiros(List<Terceiro> terceiros, Evento evento) throws CampoUniqueException {
         if (eventoTerceiroDAO.removerTerceirosDoEvento(evento)) {
             try {
-                for (Terceiro terceiro : terceiros) {   
+                for (Terceiro terceiro : terceiros) {
                     EventoTerceiro eventoTerceiro = new EventoTerceiro();
                     eventoTerceiro.setIdterceiro(terceiro.getIdterceiro());
                     eventoTerceiro.setIdevento(evento.getIdevento());
@@ -145,11 +149,11 @@ public class EventoFachada {
             throw new CampoUniqueException(getERRO_EXCLUSAO());
         }
     }
-    
+
     public void InserirDecoracao(List<Item> itens, Evento evento) throws CampoUniqueException {
         if (decoracaoDAO.removerDecoracaoDoEvento(evento)) {
             try {
-                for (Item item : itens) {   
+                for (Item item : itens) {
                     Decoracao decoracao = new Decoracao();
                     decoracao.setIditem(item.getIditem());
                     decoracao.setIdevento(evento.getIdevento());
@@ -230,6 +234,10 @@ public class EventoFachada {
      */
     public void setDecoracaoDAO(DecoracaoDAO decoracaoDAO) {
         this.decoracaoDAO = decoracaoDAO;
+    }
+
+    public List<Evento> ListarEventosDetalhes() {
+        return this.eventoDAO.RecuperarEventoDetalhe();
     }
 
 }

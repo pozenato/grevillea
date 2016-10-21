@@ -68,13 +68,14 @@ public class UsuarioManagedBean {
         senhavalidada = ValidaSenha.encripta(this.usuario.getSenha());
         this.usuario.setSenha(senhavalidada);
         this.usuario.setPrimeiroacesso(true);
+        this.usuario.setTipouser('U');
         getUsuarioFachada().Inserir(getUsuario());
         this.recuperarUsuarios();
         return "/Usuario/ListarUsuarios?faces-redirect=true";
     }
 
     public String Alterar() {
-        if (this.usuarioLogado.getIdUsuario() == 1 || this.usuarioLogado.equals(this.usuario)) {
+        if (this.usuarioLogado.getTipouser() == 'A' || this.usuarioLogado.equals(this.usuario)) {
             senhavalidada = ValidaSenha.encripta(this.usuario.getSenha());
             this.usuario.setSenha(senhavalidada);
             this.usuario.setPrimeiroacesso(false);

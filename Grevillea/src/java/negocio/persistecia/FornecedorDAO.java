@@ -46,4 +46,8 @@ public class FornecedorDAO {
         return em.find(Fornecedor.class, id);
     }
 
+    public void Alterar(Fornecedor fornecedor) {
+        em.merge(fornecedor);
+    }
+
 }

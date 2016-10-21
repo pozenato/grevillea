@@ -21,13 +21,13 @@
                     <h:panelGrid columns="10">
                         <div class="despesa">
                             <p:outputLabel value="Data Inicial" for="dataInit" style="width: 90px"/>
-                            <p:calendar id="dataInit" value="#{eventoManagedBean.dataInit}" pattern="dd/MM/yyyy" mask="true"
+                            <p:calendar id="dataInit" value="#{eventoManagedBean.lancPesquisa.dataprevisao}" pattern="dd/MM/yyyy" mask="true"
                                         required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
                             <p:message for="dataInit"/>  
                         </div>
                         <div class="despesa">
                             <p:outputLabel value="Data Final" for="dataFim" style="width: 90px"/>
-                            <p:calendar id="dataFim" value="#{eventoManagedBean.dataFim}" pattern="dd/MM/yyyy" mask="true"
+                            <p:calendar id="dataFim" value="#{eventoManagedBean.lancPesquisa.datarecebimento}" pattern="dd/MM/yyyy" mask="true"
                                         required="true" pages="1"  requiredMessage="Preenchimento Obrigatório"/>
                             <p:message for="dataFim"/>  
                         </div>

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 import negocio.entidade.Colaborador;
 import negocio.entidade.Tipo;
@@ -26,11 +27,10 @@ import org.primefaces.model.DualListModel;
  * @author pozenato
  */
 @ManagedBean(name = "colaboradorManagedBean")
-@RequestScoped
+@SessionScoped
 public class ColaboradorManagedBean {
 
-    private Colaborador colaborador;
-    private Colaborador colaboradorAlteracao = new Colaborador();
+    private Colaborador colaborador = new Colaborador();
     private List<Colaborador> colaboradores;
     private List<Colaborador> colaboradorFiltro;
     private TipoColaborador tipo = new TipoColaborador();
@@ -48,18 +48,17 @@ public class ColaboradorManagedBean {
     }
 
     public String montarPaginaParaInsercao() {
-        this.setColaborador(new Colaborador());
-        this.recuperarColaboradores();
+        this.colaborador = new Colaborador();
         return "/Colaborador/InserirColaborador?faces-redirect=true";
     }
 
     public String montarPaginaParaAlterar () {
-        this.setColaboradorAlteracao(colaborador);
         return "/Colaborador/AlterarColaborador?faces-redirect=true";
     }
     
     public String Alterar () {
         this.getColaboradorFachada().Alterar(colaborador);
+        this.recuperarColaboradores(); 
         return "/Colaborador/ListarColaboradores?faces-redirect=true";
     }
     
@@ -73,8 +72,8 @@ public class ColaboradorManagedBean {
     }    
 
     private void recuperarColaboradores() {
-        setColaboradorFiltro(colaboradorFachada.Listar());
-        this.setColaboradores(colaboradorFachada.Listar());
+        colaboradorFiltro = colaboradorFachada.Listar();
+        this.colaboradores = colaboradorFachada.Listar();
     }
     
      public List<SelectItem> getTiposColaborador() {
@@ -124,7 +123,6 @@ public class ColaboradorManagedBean {
      * @return the colaboradoress
      */
     public List<Colaborador> getColaboradores() {
-        this.recuperarColaboradores();
         return colaboradores;
     }
 
@@ -213,19 +211,4 @@ public class ColaboradorManagedBean {
     public void setIdTipoSelecionado(int idTipoSelecionado) {
         this.idTipoSelecionado = idTipoSelecionado;
     }
-
-    /**
-     * @return the colaboradorAlteracao
-     */
-    public Colaborador getColaboradorAlteracao() {
-        return colaboradorAlteracao;
-    }
-
-    /**
-     * @param colaboradorAlteracao the colaboradorAlteracao to set
-     */
-    public void setColaboradorAlteracao(Colaborador colaboradorAlteracao) {
-        this.colaboradorAlteracao = colaboradorAlteracao;
-    }
-
 }

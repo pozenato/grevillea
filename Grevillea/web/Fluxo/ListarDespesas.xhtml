@@ -81,7 +81,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Tipo"/>
                                 </f:facet>
-                                <h:outputText value="#{despesa.tipo == 'D' ? 'Despesa' : 'Investimento'}" />
+                                <h:outputText value="#{despesa.tipo == 'D' ? 'Despesa' : despesa.tipo == 'I' ? 'Investimento' : 'Despesas Gerais'}" />
                             </p:column> 
                             <p:column sortBy="#{despesa.valor}" filterBy="#{despesa.valor}">
                                 <f:facet name="header">
