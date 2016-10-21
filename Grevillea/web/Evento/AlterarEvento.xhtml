@@ -118,17 +118,19 @@
                             <p:growl id="excluir" showDetail="true" />  
 
                             <p:commandButton value="Confirmar Evento" action="#{eventoManagedBean.Alterar}" update="message" style="margin-left: 10px;" styleClass="btn btn-success" >
-                                <p:confirm header="Confirmação" message="Deseja realmente Confirmar definitivamente esse evento?" icon="ui-icon-alert" />
+                                <p:confirm header="Confirmação" message="Deseja Confirmar definitivamente esse evento?" icon="ui-icon-alert" />
                             </p:commandButton>
                             
-                            <p:commandButton value="Excluir Evento" action="#{eventoManagedBean.Excluir}" update="excluir" style="margin-left: 10px;" styleClass="btn btn-danger" >
-                                <p:confirm header="Confirmação" message="Deseja realmente Excluir definitivamente esse evento?" icon="ui-icon-alert" />
+                            <p:commandButton value="Excluir Evento" action="#{eventoManagedBean.Excluir}" update="excluir" style="margin-left: 30px;" styleClass="btn btn-danger" >
+                                <p:confirm header="Confirmação" message="Deseja Excluir definitivamente esse evento?" icon="ui-icon-alert" />
                             </p:commandButton>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" style="margin-left: 10px;" icon="ui-icon-check" />
-                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" style="margin-right: 10px; margin-left: 70px; " icon="ui-icon-close" />
+                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" style="margin-left: 18%" icon="ui-icon-check" />
+                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" style="margin-right: 10px; margin-left: 22%; " icon="ui-icon-close" />
                             </p:confirmDialog>    
+                            
+                            <p:commandButton value="Voltar" action="#{eventoManagedBean.listar}" style="margin-left: 30px;" styleClass="btn btn-alert" />
 
                         </p:fieldset>
                     </h:panelGrid>

@@ -673,7 +673,6 @@ public class EventoManagedBean implements java.io.Serializable {
      * @return the eventos
      */
     public List<Evento> getEventos() {
-        this.recuperarEventos();
         return eventos;
     }
 

@@ -186,7 +186,7 @@ public class EventoFachada {
     public void verificarSeADataJaFoiCadastrada(Date data) throws CampoUniqueException {
         Evento evento = this.eventoDAO.verificarSeADataJaFoiCadastrada(data);
         if (evento != null) {
-            if (evento.getAtivo() == 'C') {
+            if (evento.getAtivo() != 'A') {
                 throw new CampoUniqueException(get_AGENDAMENTO_DEFINITIVO());
             }
             throw new CampoUniqueException(getDATA_E_INFORMADA_JA_AGENDADA());
