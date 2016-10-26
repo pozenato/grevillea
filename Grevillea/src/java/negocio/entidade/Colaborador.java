@@ -58,8 +58,8 @@ public class Colaborador implements Serializable {
     @Column(name = "status")
     private Boolean status;
     
-    @JoinColumn(name = "tipo", referencedColumnName = "idtipo", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo", referencedColumnName = "idtipo", nullable = false)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     private TipoColaborador tipo;
                    
     public Colaborador() {

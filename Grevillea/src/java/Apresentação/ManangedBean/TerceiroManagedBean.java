@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 import negocio.entidade.Produto;
 import negocio.entidade.Terceiro;
 import negocio.entidade.TerceiroTipo;
@@ -21,6 +22,7 @@ import negocio.entidade.Tipo;
 import negocio.entidade.TipoColaborador;
 import negocio.fachada.ProdutoFachada;
 import negocio.fachada.TerceiroFachada;
+import negocio.fachada.TipoTerceiroFachada;
 import org.primefaces.model.DualListModel;
 
 /**
@@ -40,13 +42,16 @@ public class TerceiroManagedBean {
 
     @EJB
     private TerceiroFachada terceiroFachada;
+    
+    @EJB
+    private TipoTerceiroFachada tipoTerceiroFachada;
 
     public TerceiroManagedBean() {
     }
 
     public String montarPaginaParaInsercao() {
         this.terceiro = new Terceiro();
-        this.recuperarTerceiros();
+        this.render = 0;
         return "/Terceiro/InserirTerceiro?faces-redirect=true";
     }
     
@@ -62,11 +67,23 @@ public class TerceiroManagedBean {
 
     public String Inserir() {
         this.terceiro.setStatus(true);
-        this.tipo.setIdtipo(render);
+        this.setTipo(tipoTerceiroFachada.listarPorId(render));
         this.terceiro.setTipo(tipo);
         terceiroFachada.Inserir(terceiro);
         this.recuperarTerceiros();        
         return "/Terceiro/ListarTerceiros?faces-redirect=true";
+    }
+    
+     public List<SelectItem> getTiposTerceiros() {
+        List<TerceiroTipo> tiposTerceiros = tipoTerceiroFachada.Listar();
+
+        List<SelectItem> tipos = new ArrayList<>(tiposTerceiros.size());
+
+        for (TerceiroTipo tipo : tiposTerceiros) {
+            tipos.add(new SelectItem(tipo.getIdtipo(), tipo.getDescricao()));
+        }
+
+        return tipos;
     }
     
 
@@ -168,6 +185,20 @@ public class TerceiroManagedBean {
      */
     public void setRender(int render) {
         this.render = render;
+    }
+
+    /**
+     * @return the tipoTerceiroFachada
+     */
+    public TipoTerceiroFachada getTipoTerceiroFachada() {
+        return tipoTerceiroFachada;
+    }
+
+    /**
+     * @param tipoTerceiroFachada the tipoTerceiroFachada to set
+     */
+    public void setTipoTerceiroFachada(TipoTerceiroFachada tipoTerceiroFachada) {
+        this.tipoTerceiroFachada = tipoTerceiroFachada;
     }
 
 }

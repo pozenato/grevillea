@@ -27,15 +27,13 @@
                                 <p:message for="nome"/>
                             </h:panelGrid>
                             <h:panelGrid columns="3">
-                                <h:outputLabel value="Tipo de Terceiro" for="tipo" style="width: 125px"/>                            
-                                <p:selectOneMenu id="tipo" value="#{terceiroManagedBean.render}">
-                                    <f:selectItem itemValue="0" itemLabel="Selecione:"/>
-                                    <f:selectItem itemValue="1" itemLabel="Banda"/>
-                                    <f:selectItem itemValue="2" itemLabel="Fotografo"/>
-                                    <f:selectItem itemValue="3" itemLabel="Decorador"/>
-                                    <f:selectItem itemValue="4" itemLabel="Confeiteiro"/>
-                                    <f:selectItem itemValue="5" itemLabel="Cerimonialista"/>
-                                </p:selectOneMenu>
+                                <h:outputLabel value="Tipo Terceiro:" for="render"/>
+                                <h:selectOneMenu id="idTipoSelecionado" value="#{terceiroManagedBean.render}" style="padding-left: -46%" 
+                                                 requiredMessage="Preenchimento Obrigatório" required="true">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItems value="#{terceiroManagedBean.tiposTerceiros}"/>
+                                </h:selectOneMenu>
+                                <p:message for="idTipoSelecionado"/> 
                             </h:panelGrid>
                         </h:panelGrid>
                         <h:panelGrid columns="3">

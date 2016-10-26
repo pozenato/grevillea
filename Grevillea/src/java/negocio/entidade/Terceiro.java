@@ -59,7 +59,7 @@ public class Terceiro implements Serializable {
     @Column(name = "status")
     private Boolean status;
     
-    @JoinColumn(name = "tipo", referencedColumnName = "idtipo", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "tipo", referencedColumnName = "idtipo", nullable = false)
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private TerceiroTipo tipo;
             

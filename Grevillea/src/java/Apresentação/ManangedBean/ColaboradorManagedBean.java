@@ -49,6 +49,7 @@ public class ColaboradorManagedBean {
 
     public String montarPaginaParaInsercao() {
         this.colaborador = new Colaborador();
+        this.idTipoSelecionado = 0;
         return "/Colaborador/InserirColaborador?faces-redirect=true";
     }
 
@@ -64,7 +65,7 @@ public class ColaboradorManagedBean {
     
     public String Inserir() {
         this.colaborador.setStatus(true);
-        this.tipo.setIdtipo(idTipoSelecionado);
+        this.setTipo(this.tipoColaboradorFachada.listarPorId(idTipoSelecionado));
         this.colaborador.setTipo(tipo);
         colaboradorFachada.Inserir(colaborador);
         this.recuperarColaboradores();        
